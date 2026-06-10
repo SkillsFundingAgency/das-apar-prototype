@@ -1,0 +1,180 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">
+        Organisation details
+      </span>
+      <h1 class="govuk-heading-xl">
+        Details for 10019900
+      </h1>
+
+      <div>
+        <p>UKPRN: 10019900</p>
+        <p>Legal name: Denton Business Services Limited</p>
+        <p>Trading name: FM Guru</p>
+        <p>Company number: 4760170</p>
+        <p>Last updated: 16 Jul 2025</p>
+      </div>
+      
+      <h2>Update training provider information</h2>
+
+      <h3>Overview</h3>
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Status"
+      },
+      value: {
+        html: '<strong class="govuk-tag">Onboarding</strong>'
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "status"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Type of provider"
+      },
+      value: {
+        text: "Main"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "type of provider"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Type of organisation"
+      },
+      value: {
+        text: "Academy"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "type of organisation"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+<h3>Course offering</h3>
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Apprenticeship delivery status"
+      },
+      value: {
+        text: "All courses allowed (with restrictions)"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "apprenticeship delivery status"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Apprenticeships"
+      },
+      value: {
+        text: "16 restricted"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Manage",
+            visuallyHiddenText: "apprenticeships"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Apprenticeship units"
+      },
+      value: {
+        text: "None added"
+      },
+      actions: {
+        items: [
+          {
+            href: "../apprenticeship-units/apprenticeship-unit-list",
+            text: "Manage",
+            visuallyHiddenText: "apprenticeship units"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+<h3>Account management</h3>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Type of provider"
+      },
+      value: {
+        text: "01 Jan 2025"
+      }
+    },
+    {
+      key: {
+        text: "Type of organisation"
+      },
+      value: {
+        text: "Not applicable"
+      }
+    }
+  ]
+}) }}
+
+
+    </div>
+  </div>
+
+{% endblock %}

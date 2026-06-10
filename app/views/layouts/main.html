@@ -4,3 +4,43 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 #}
 
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/assets/stylesheets/accessible-autocomplete.min.css">
+   <link rel="stylesheet" href="/assets/stylesheets/dfefrontend.min.css">
+{% endblock %}
+
+
+
+{% block scripts %}
+  {{ super() }}
+
+  
+<script>
+  console.log("JS is definitely running")
+</script>
+
+<script src="/assets/javascripts/test.js"></script>
+
+  <script src="/assets/javascripts/dfefrontend.min.js"></script>
+
+
+<script src="/assets/javascripts/accessible-autocomplete.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log("Autocomplete loaded")
+
+      const select = document.querySelector('#my-select')
+
+      if (select) {
+        accessibleAutocomplete.enhanceSelectElement({
+          selectElement: select,
+          showAllValues: true
+        })
+      }
+    })
+  </script>
+
+{% endblock %}

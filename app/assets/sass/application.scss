@@ -4,3 +4,58 @@
 // 
 
 // Add extra styles here
+@import 'node_modules/dfe-frontend/packages/dfefrontend';
+@import url('https://rsms.me/inter/inter.css');
+$govuk-font-family: 'Inter', sans-serif;
+
+.govuk-width-container {
+    @include govuk-width-container;
+}
+
+.tableNumbers{
+      font-feature-settings: 'tnum' 1, 'ss01' 1, 'zero' 1;
+  }
+
+
+  .faa-filter {
+    border: 1px solid var(--govuk-border-colour, #cecece);
+    padding: 0;
+
+    &__header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--govuk-border-colour, #cecece);
+}
+
+&__heading {
+    margin: 0;
+}
+  }
+
+@media (min-width: 40.0625em) {
+    .faa-filter__header, .faa-filter__body {
+        padding: 20px;
+
+        button {
+            margin: 0;
+        }
+    }
+
+        .govuk-form-group {
+        margin-bottom: 30px!important;
+    }
+}
+
+.course {
+
+    &-item {
+        border-bottom: 1px solid var(--govuk-border-colour, #cecece);
+        padding: 15px 0 20px;
+    }
+
+    &-title {
+           display: flex;
+    place-content: space-between;
+    flex-wrap: wrap;
+    }
+}

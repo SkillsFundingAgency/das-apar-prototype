@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "3.0.0",
+    "accessible-autocomplete": "^3.0.1",
+    "dfe-frontend": "^2.0.1",
     "govuk-frontend": "6.2.0",
     "govuk-prototype-kit": "13.20.1"
   }
