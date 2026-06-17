@@ -1,0 +1,19 @@
+<div class="provider-item js-provider-item">
+  <div class="provider-title">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
+      {{ provider.title }}
+    </h2>
+    <a href="#" class="govuk-link govuk-body govuk-!-margin-bottom-1">
+      Change
+    </a>
+  </div>
+
+  <p class="govuk-body govuk-!-margin-bottom-3">
+    LARS code: {{ provider.ukprn }}
+  </p>
+
+  {{ govukTag({
+    text: provider.status,
+    classes: provider.tagClass
+  }) }}
+</div>

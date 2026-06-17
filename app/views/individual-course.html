@@ -1,0 +1,197 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+
+    {% if showBanner and data['courses'] %}
+
+    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+    {% set lastCourse = data['courses'] | last %}
+
+    {% set html %}
+    <h3 class="govuk-notification-banner__heading">
+      {{ lastCourse }} has been added to the approved list of courses
+    </h3>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+    html: html,
+    type: "success"
+    }) }}
+
+    {% endif %}
+
+
+ <span class="govuk-caption-xl">
+       Course details
+      </span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      Academic Professional (Level 7)</h1>
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Type"
+      },
+      value: {
+        text: "Apprenticeship"
+      }
+    },
+    {
+      key: {
+        text: "Sector"
+      },
+      value: {
+        text: "Education and early years"
+      }
+    },
+    {
+      key: {
+        text: "LARS code"
+      },
+      value: {
+        text: "108"
+      }
+    },
+    {
+      key: {
+        text: "Status"
+      },
+      value: {
+        text: 'Unrestricted'
+      }
+    }
+  ]
+}) }}
+
+    <h2>Training providers currently delivering this course</h2>
+
+    <p>If you want to remove or add any providers to this list, you will need to restrict the course. </p>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    {{ govukButton({
+    text: "Restrict this course",
+    href: '/restrict-course-confirmation'
+    }) }}
+
+
+  </div>
+</div>
+
+
+
+<div class="govuk-grid-row govuk-!-margin-top-4">
+
+  <!-- LEFT: FILTERS -->
+
+  <div class="govuk-grid-column-one-third faa-filter">
+
+    <div class="faa-filter__header">
+      <h2 class="govuk-heading-m faa-filter__heading">Filter</h2>
+    </div>
+
+    <div class="faa-filter__body">
+      <div class="govuk-form-group">
+
+
+        <label class="govuk-fieldset__legend govuk-fieldset__legend--m" for="course-name">
+          Provider name
+        </label>
+        <div id="course-name-hint" class="govuk-hint">
+          Search by provider name or UKPRN
+        </div>
+
+        <input class="govuk-input" id="course-name" name="course-name" type="text">
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+<!-- 
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Apprenticeship level
+          </legend>
+
+          <div class="govuk-checkboxes">
+
+            {% for level in ["Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"] %}
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" type="checkbox" name="level" value="{{ level }}">
+              <label class="govuk-label govuk-checkboxes__label">
+                {{ level }}
+              </label>
+            </div>
+            {% endfor %}
+
+          </div> -->
+      <!-- </div> -->
+      </fieldset>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+      {{ govukButton({
+      text: "Apply filter"
+      }) }}
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+
+
+
+
+
+
+
+
+  <div class="course-list govuk-grid-column-two-thirds">
+    <div class="govuk-!-margin-bottom-4">
+      <span class="govuk-body"><strong>20 providers</strong></span>
+
+      <span style="float:right">
+        Sorted by: <strong>Name of provider</strong>
+      </span>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-">
+
+
+{% for provider in providers %}
+  {% set provider = provider %}
+  {% include "components/provider-item.njk" %}
+{% endfor %}
+
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination__list" id="pagination-list"></ul>
+</nav>
+
+
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}

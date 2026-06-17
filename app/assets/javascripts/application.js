@@ -4,5 +4,114 @@
 //
 
 window.GOVUKPrototypeKit.documentReady(() => {
-  // Add JavaScript here
+
+  //Course autocomplete
+accessibleAutocomplete({
+  element: document.querySelector('#autocomplete-container'),
+  id: 'course-autocomplete',
+  source: [
+    'Academic Professional (Level 7)',
+    'Electrical Installation (Level 3)',
+    'Engineering Technician (Level 3)',
+    'Dental Nurse (Level 3)',
+    'Early Years Educator (Level 3)',
+    'Business Administrator (Level 3)',
+    'Customer Service Practitioner (Level 2)',
+    'Construction Site Supervisor (Level 4)',
+    'Associate Project Manager (Level 4)',
+    'Data Analyst (Level 4)',
+    'Network Engineer (Level 4)',
+    'Software Developer (Level 4)',
+    'Digital Marketer (Level 3)',
+    'Accounting Technician (Level 4)',
+    'Laboratory Technician (Level 3)',
+    'Healthcare Support Worker (Level 2)',
+    'Chartered Surveyor (Level 6)',
+    'Civil Engineer (Level 6)',
+    'Registered Nurse (Level 6)',
+    'Advanced Clinical Practitioner (Level 7)',
+    'Domestic Heating Technician (Level 3)'
+  ],
+  onConfirm: function (val) {
+    document.querySelector('#selected-course').value = val
+  }
+})
+
+})
+
+//pagination
+document.addEventListener('DOMContentLoaded', function () {
+
+  const items = document.querySelectorAll('.js-course-item')
+  const paginationContainer = document.getElementById('pagination-list')
+
+  const itemsPerPage = 10
+  const totalPages = Math.ceil(items.length / itemsPerPage)
+
+  let currentPage = 1
+
+  function showPage(page) {
+    currentPage = page
+
+    items.forEach((item, index) => {
+      const start = (page - 1) * itemsPerPage
+      const end = start + itemsPerPage
+
+      if (index >= start && index < end) {
+        item.style.display = 'block'
+      } else {
+        item.style.display = 'none'
+      }
+    })
+
+    renderPagination()
+  }
+
+  function renderPagination() {
+    paginationContainer.innerHTML = ''
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li')
+      li.classList.add('pagination__item')
+
+      if (i === currentPage) {
+        li.classList.add('pagination__item--active')
+      }
+
+      const link = document.createElement('a')
+      link.href = '#'
+      link.textContent = i
+
+      link.addEventListener('click', function (e) {
+        e.preventDefault()
+        showPage(i)
+      })
+
+      li.appendChild(link)
+      paginationContainer.appendChild(li)
+    }
+
+    // Next button
+    if (currentPage < totalPages) {
+      const li = document.createElement('li')
+      li.classList.add('pagination__item', 'pagination__next')
+
+      const link = document.createElement('a')
+      link.href = '#'
+      link.innerHTML = 'Next →'
+
+      link.addEventListener('click', function (e) {
+        e.preventDefault()
+        showPage(currentPage + 1)
+      })
+
+      li.appendChild(link)
+      paginationContainer.appendChild(li)
+    }
+  }
+
+  // Initialise
+  showPage(1)
+
 })

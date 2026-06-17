@@ -48,6 +48,10 @@ $govuk-font-family: 'Inter', sans-serif;
 
 .course {
 
+    &-list {
+        padding-left: 25px;
+    }
+
     &-item {
         border-bottom: 1px solid var(--govuk-border-colour, #cecece);
         padding: 15px 0 20px;
@@ -58,4 +62,36 @@ $govuk-font-family: 'Inter', sans-serif;
     place-content: space-between;
     flex-wrap: wrap;
     }
+}
+
+.pagination__list {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding: 0;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.pagination__item a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #1d70b8;
+}
+
+.pagination__item--active a {
+  background-color: #1d70b8;
+  color: white;
+  padding: 10px 14px;
+  display: inline-block;
+}
+
+.pagination__next a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.autocomplete__option {
+    margin-bottom: 0!important;
 }
