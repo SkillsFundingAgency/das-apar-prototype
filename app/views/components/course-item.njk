@@ -32,13 +32,13 @@
 
 {% set tagClass = "" %}
 
-{% if course.status == "Active" %}
+{% if course.status == "Open to new starts" %}
   {% set tagClass = "govuk-tag--green" %}
 {% elif course.status == "Last start date set" %}
   {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Marked for removal" %}
+{% elif course.status == "Scheduled for removal" %}
   {% set tagClass = "govuk-tag--red" %}
-{% elif course.status == "Inactive" %}
+{% elif course.status == "Closed to new starts" %}
   {% set tagClass = "govuk-tag--grey" %}
 {% endif %}
 
@@ -47,7 +47,7 @@
   classes: tagClass
 }) }}
 
-{% if course.status == "Marked for removal" %}
+{% if course.status == "Scheduled for removal" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   text: "You haven’t delivered this course since [DATE]. It will be removed from your account on 2 July 2026 unless you [ACTION]",

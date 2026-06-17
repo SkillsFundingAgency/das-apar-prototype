@@ -108,4 +108,8 @@ $govuk-font-family: 'Inter', sans-serif;
     .govuk-tag, .govuk-warning-text {
         margin: 10px 0 0 0;
     }
+
+    .govuk-tag {
+        max-width: 100%;
+    }
 }

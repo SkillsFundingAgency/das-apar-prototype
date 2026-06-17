@@ -61,90 +61,152 @@ href: "javascript:window.history.back()"
 <div class="govuk-grid-row govuk-!-margin-top-4">
   <h3>Your apprenticeships</h3>
 
-  <!-- LEFT: FILTERS -->
+<div class="govuk-grid-row">
 
+  <!-- LEFT: FILTERS -->
   <div class="govuk-grid-column-one-third faa-filter">
 
-    <div class="faa-filter__header">
-      <h2 class="govuk-heading-m faa-filter__heading">Filter</h2>
-    </div>
+    <form method="get">
 
-    <div class="faa-filter__body">
-      <div class="govuk-form-group">
+      <div class="faa-filter__header">
+        <h2 class="govuk-heading-m faa-filter__heading">Filter</h2>
+      </div>
 
+      <div class="faa-filter__body">
 
-        <label class="govuk-fieldset__legend govuk-fieldset__legend--m" for="course-name">
-          Course name
-        </label>
-        <div id="course-name-hint" class="govuk-hint">
-          Search by course name or LARS code
+        <!-- Search -->
+        <div class="govuk-form-group">
+          <label class="govuk-fieldset__legend govuk-fieldset__legend--m" for="course-name">
+            Course name
+          </label>
+
+          <div class="govuk-hint">
+            Search by course name or LARS code
+          </div>
+
+          <input
+            class="govuk-input"
+            id="course-name"
+            name="search"
+            type="text"
+            value="{{ data.search }}"
+          >
         </div>
 
-        <input class="govuk-input" id="course-name" name="course-name" type="text">
-      </div>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
-      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+        <!-- Status filter -->
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
 
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              Delivery status
+            </legend>
 
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            Delivery status
-          </legend>
+            <div class="govuk-checkboxes">
 
-          <div class="govuk-checkboxes">
+              {% set statusOptions = [
+                "Open to new starts",
+                "Last start date set",
+                "Scheduled for removal",
+                "Closed to new starts"
+              ] %}
 
-            {% for status in ["Active","Last start date set","Marked for removal","Not visible to employers"] %}
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" type="checkbox" name="level" value="{{ level }}">
-              <label class="govuk-label govuk-checkboxes__label">
-                {{ status }}
-              </label>
+              {% for status in statusOptions %}
+                <div class="govuk-checkboxes__item">
+                  <input
+                    class="govuk-checkboxes__input"
+                    type="checkbox"
+                    name="status"
+                    value="{{ status }}"
+                    {% if data.status and status in data.status %}checked{% endif %}
+                  >
+                  <label class="govuk-label govuk-checkboxes__label">
+                    {{ status }}
+                  </label>
+                </div>
+              {% endfor %}
+
             </div>
-            {% endfor %}
+          </fieldset>
+        </div>
 
-          </div>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+        {{ govukButton({
+          text: "Apply filter",
+          classes: "govuk-button--secondary"
+        }) }}
+
       </div>
-      </fieldset>
-
-      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-
-      {{ govukButton({
-      text: "Apply filter",
-      classes: "govuk-button--secondary"
-      }) }}
-    </div>
+    </form>
   </div>
 
   <!-- RIGHT: RESULTS -->
-
-
-
-
-
-
-
-
   <div class="course-list govuk-grid-column-two-thirds">
+
+    {% set results = [] %}
+
+    {# Loop and filter courses #}
+    {% for course in courses %}
+
+      {% set matchesSearch = true %}
+      {% set matchesStatus = true %}
+
+      {# Search filter #}
+      {% if data.search %}
+        {% set searchLower = data.search | lower %}
+        {% if (course.title | lower).indexOf(searchLower) == -1
+          and (course.larsCode | lower).indexOf(searchLower) == -1 %}
+          {% set matchesSearch = false %}
+        {% endif %}
+      {% endif %}
+
+      {# Status filter #}
+      {% if data.status %}
+        {% if course.status not in data.status %}
+          {% set matchesStatus = false %}
+        {% endif %}
+      {% endif %}
+
+      {# If matches both, include it #}
+      {% if matchesSearch and matchesStatus %}
+        {% set results = results.concat([course]) %}
+      {% endif %}
+
+    {% endfor %}
+
+    <!-- Results count -->
     <div class="govuk-!-margin-bottom-4">
-      <span class="govuk-body"><strong>1 course</strong></span>
+      <span class="govuk-body">
+        {% set courseCount = results.length %}
+
+<strong>
+  {{ courseCount }} course{% if courseCount != 1 %}s{% endif %}
+</strong>
+
+      </span>
 
       <span style="float:right">
         Sorted by: <strong>Name of course</strong>
       </span>
     </div>
 
-    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-">
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
+    <!-- Results list -->
+    {% for course in results %}
+      {% include "components/course-item.njk" %}
+    {% endfor %}
 
-{% for course in courses %}
-  {% set course = course %}
-  {% include "components/course-item.njk" %}
-{% endfor %}
+    {% if results.length == 0 %}
+      <p class="govuk-body">No courses match your filters.</p>
+    {% endif %}
 
-<nav class="pagination" aria-label="Pagination">
-  <ul class="pagination__list" id="pagination-list"></ul>
-</nav>
+  </div>
+
+</div>
+
 
 
 
