@@ -1,5 +1,5 @@
 {
-  "serviceName": "Apprenticeship service admin",
+  "serviceName": "Your training provider account",
   "useServiceNavigation": true,
   "plugins": {
     "govuk-frontend": {

@@ -1,0 +1,19 @@
+<div class="course-item js-course-item">
+  <div class="course-title">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
+      {{ course.title }}
+    </h2>
+    <a href="#" class="govuk-link govuk-body govuk-!-margin-bottom-1">
+      Change
+    </a>
+  </div>
+
+  <p class="govuk-body govuk-!-margin-bottom-3">
+    LARS code: {{ course.larsCode }}
+  </p>
+
+  {{ govukTag({
+    text: course.status,
+    classes: course.tagClass
+  }) }}
+</div>

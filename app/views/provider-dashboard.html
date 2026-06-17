@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+        WISDOM INTEL
+      </h1>
+
+      <p>
+        UKPRN: 100474641
+      </p>
+      </div>
+      </div>
+
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-9">
+
+        <h2>Manage applications</h2>
+          <div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-7">
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Access the gateway</a></h3>
+              <p>Conduct due diligence and monitor applications. </p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Review readiness and quality </a></h3>
+              <p>Review new, in progress and approved applications. </p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Complete financial heath assessment </a></h3>
+              <p>Review new, in progress and approved financial applications. </p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Decide on application outcomes </a></h3>
+              <p>Approve or refuse application outcomes within APAR. </p>
+            </div>
+          </div>
+
+        <h2>Course delivery management</h2>
+          <div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-7">
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Manage training provider delivery permissions </a></h3>
+              <p>Search for existing training providers and choose what they can deliver. Add new providers and UKPRNs to the allow list.  </p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="restricted-courses">View and manage restricted courses</a></h3>
+              <p>Set and manage restrictions for apprenticeships. Add or remove providers from restricted courses.</p>
+            </div>
+          </div>
+
+          <h2>Download data</h2>
+          <div class="govuk-grid-row govuk-!-margin-top-4">
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Download application data </a></h3>
+              <p>Review and download application data.</p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <h3 class="govuk-heading-m"><a href="#">Download training provider data </a></h3>
+              <p>Review and download a list of training providers.</p>
+            </div>
+          </div>
+
+    </div>
+  </div>
+
+{% endblock %}

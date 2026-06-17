@@ -25,11 +25,11 @@ router.get('/apprenticeship-units/apprenticeship-unit-list', function (req, res)
 })
 
 
-// Add restricted course to course list
+// Add provider course to course list
 const defaultCourses = require('./data/courses')
 
 // Show course list (alphabetical, combined)
-router.get('/restricted-courses', function (req, res) {
+router.get('/manage-your-standards', function (req, res) {
 
   const addedCourses = req.session.data.addedCourses || []
 
@@ -41,13 +41,13 @@ router.get('/restricted-courses', function (req, res) {
     return a.title.localeCompare(b.title)
   })
 
-  res.render('restricted-courses', {
+  res.render('manage-your-standards', {
     courses: allCourses
   })
 })
 
 
-// Add restricted course to course list
+// providers
 const defaultProviders = require('./data/providers')
 
 // Show course list (alphabetical, combined)

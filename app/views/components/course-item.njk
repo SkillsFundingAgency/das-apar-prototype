@@ -1,19 +1,59 @@
 <div class="course-item js-course-item">
   <div class="course-title">
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
-      {{ course.title }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#">
+      {{ course.title }}</a>
     </h2>
-    <a href="#" class="govuk-link govuk-body govuk-!-margin-bottom-1">
-      Change
-    </a>
+    
+
   </div>
 
-  <p class="govuk-body govuk-!-margin-bottom-3">
-    LARS code: {{ course.larsCode }}
+<div class="course-info">
+  <p>
+    <b>LARS code</b>: {{ course.larsCode }}
   </p>
 
-  {{ govukTag({
-    text: course.status,
-    classes: course.tagClass
-  }) }}
+
+{% if course.status == "Last start date set" and course.laststartDate %}
+  <p>
+    <b>Last start date</b>: {{ course.laststartDate }}
+  </p>
+{% endif %}
+
+{% if course.status == "Marked for removal" and course.removalDate %}
+  <p>
+    <b>Removal date</b>: {{ course.removalDate }}
+  </p>
+
+{% endif %}
+
+
+</div>
+
+
+{% set tagClass = "" %}
+
+{% if course.status == "Active" %}
+  {% set tagClass = "govuk-tag--green" %}
+{% elif course.status == "Last start date set" %}
+  {% set tagClass = "govuk-tag--orange" %}
+{% elif course.status == "Marked for removal" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% elif course.status == "Inactive" %}
+  {% set tagClass = "govuk-tag--grey" %}
+{% endif %}
+
+{{ govukTag({
+  text: course.status,
+  classes: tagClass
+}) }}
+
+{% if course.status == "Marked for removal" %}
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  text: "You haven’t delivered this course since [DATE]. It will be removed from your account on 2 July 2026 unless you [ACTION]",
+  iconFallbackText: "Warning"
+}) }}
+{% endif %}
+
 </div>
