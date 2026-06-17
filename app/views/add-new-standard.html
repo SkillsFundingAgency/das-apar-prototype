@@ -1,0 +1,56 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">
+       Add an apprenticeship
+      </span>
+      <h1 class="govuk-heading-xl">
+      Search for an apprenticeship
+      </h1>
+
+      <p>You can only select apprenticeships that are active and currently accepting new starts.</p>
+
+
+
+<form method="post" action="/individual-course">
+
+    <label class="govuk-label" for="selected-course">
+    To add an apprenticeship, start typing in the box and its name will appear.
+  </label>
+
+  <div id="autocomplete-container"></div>
+
+  <input type="hidden" name="course" id="selected-course">
+
+  <button class="govuk-button govuk-!-margin-top-7">Continue</button>
+</form>
+
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% call govukDetails({
+  summaryText: "Why is the apprenticeship I’m looking for not showing in the list?"
+}) %}
+  We have bought in new controls so we can better manage the delivery of apprenticeships. 
+
+Apprenticeships with restricted delivery will not appear in this list.
+{% endcall %}
+
+    </div>
+  </div>
+
+{% endblock %}
