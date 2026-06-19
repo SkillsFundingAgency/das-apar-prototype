@@ -113,3 +113,8 @@ $govuk-font-family: 'Inter', sans-serif;
         max-width: 100%;
     }
 }
+
+.govuk-tag--light-grey {
+  background-color: #f3f2f1; /* GOV.UK light grey (background) */
+  color: #505a5f; /* GOV.UK secondary text colour */
+}

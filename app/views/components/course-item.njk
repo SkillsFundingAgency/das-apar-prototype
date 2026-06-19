@@ -20,7 +20,7 @@
   </p>
 {% endif %}
 
-{% if course.status == "Marked for removal" and course.removalDate %}
+{% if course.status == "Scheduled for removal" and course.removalDate %}
   <p>
     <b>Removal date</b>: {{ course.removalDate }}
   </p>
@@ -39,7 +39,7 @@
 {% elif course.status == "Scheduled for removal" %}
   {% set tagClass = "govuk-tag--red" %}
 {% elif course.status == "Closed to new starts" %}
-  {% set tagClass = "govuk-tag--grey" %}
+  {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
 {% endif %}
 
 {{ govukTag({

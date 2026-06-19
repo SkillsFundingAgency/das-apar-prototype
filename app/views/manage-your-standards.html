@@ -67,6 +67,7 @@ href: "javascript:window.history.back()"
   <div class="govuk-grid-column-one-third faa-filter">
 
     <form method="get">
+      <input type="hidden" name="page" value="1">
 
       <div class="faa-filter__header">
         <h2 class="govuk-heading-m faa-filter__heading">Filter</h2>
@@ -134,7 +135,7 @@ href: "javascript:window.history.back()"
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
         {{ govukButton({
-          text: "Apply filter",
+          text: "Apply filters",
           classes: "govuk-button--secondary"
         }) }}
 
@@ -194,14 +195,68 @@ href: "javascript:window.history.back()"
 
     <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
+
+    <!-- Pagination-->
+
+    {% set page = data.page | default(1) | int %}
+{% set pageSize = 10 %}
+
+    {% set total = results.length %}
+{% set totalPages = (total / pageSize) | round(0, 'ceil') %}
+
+{% set start = (page - 1) * pageSize %}
+{% set end = start + pageSize %}
+
+{% set paginatedResults = results.slice(start, end) %}
+
     <!-- Results list -->
-    {% for course in results %}
-      {% include "components/course-item.njk" %}
-    {% endfor %}
+
+{% for course in paginatedResults %}
+  {% include "components/course-item.njk" %}
+{% endfor %}
 
     {% if results.length == 0 %}
       <p class="govuk-body">No courses match your filters.</p>
     {% endif %}
+
+{% if totalPages > 1 %}
+<nav class="govuk-pagination" aria-label="Pagination">
+
+  <ul class="govuk-pagination__list">
+
+    {# Previous button #}
+    {% if page > 1 %}
+    <li class="govuk-pagination__item govuk-pagination__item--prev">
+      <a class="govuk-link govuk-pagination__link"
+         href="?page={{ page - 1 }}{% if data.search %}&search={{ data.search }}{% endif %}{% for s in data.status or [] %}&status={{ s }}{% endfor %}">
+        Previous
+      </a>
+    </li>
+    {% endif %}
+
+    {# Page numbers #}
+    {% for p in range(1, totalPages + 1) %}
+      <li class="govuk-pagination__item {% if p == page %}govuk-pagination__item--current{% endif %}">
+        <a class="govuk-link govuk-pagination__link"
+           href="?page={{ p }}{% if data.search %}&search={{ data.search }}{% endif %}{% for s in data.status or [] %}&status={{ s }}{% endfor %}">
+          {{ p }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {# Next button #}
+    {% if page < totalPages %}
+    <li class="govuk-pagination__item govuk-pagination__item--next">
+      <a class="govuk-link govuk-pagination__link"
+         href="?page={{ page + 1 }}{% if data.search %}&search={{ data.search }}{% endif %}{% for s in data.status or [] %}&status={{ s }}{% endfor %}">
+        Next
+      </a>
+    </li>
+    {% endif %}
+
+  </ul>
+</nav>
+{% endif %}
 
   </div>
 
