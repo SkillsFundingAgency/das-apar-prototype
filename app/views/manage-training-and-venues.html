@@ -1,0 +1,62 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Manage training and venues
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      Manage training and venues</h1>
+
+      <p>Manage apprenticeship units or standards, training venues and contact details. Changes you make here will appear on Find apprenticeship training.</p>
+      
+
+<div class="govuk-grid-row govuk-!-margin-top-8">
+  <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="/training-type" class="govuk-heading-m">Training</a>
+      <p>Add, update or delete the training you deliver. </p>
+    </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="#" class="govuk-heading-m">Training venues</a>
+      <p>Add, update or delete your training venues.</p>
+    </div>
+    </div>
+    </div>
+     
+    <div class="govuk-grid-row govuk-!-margin-top-6">
+
+    <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="#" class="govuk-heading-m">Contact details</a>
+      <p>Add or update the primary set of contact details you use for your training. </p>
+    </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="#" class="govuk-heading-m">Overview</a>
+      <p>View your provider overview that shows on Find training for learners. </p>
+    </div>
+    </div>
+    
+
+  </div>
+  </div>
+  </div>
+
+{% endblock %}

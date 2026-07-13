@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Manage training and venues
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      Choose training type</h1>
+
+<div class="govuk-grid-row govuk-!-margin-top-8">
+  <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="/manage-your-standards" class="govuk-heading-m">Apprenticeships</a>
+      <p>Add, update or delete your apprenticeships.</p>
+    </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+    <div class="action-container-border">
+    <a href="#" class="govuk-heading-m">Apprenticeship units</a>
+      <p>Add, update or delete your apprenticeship units.</p>
+    </div>
+    </div>
+    </div>
+     
+  </div>
+  </div>
+
+{% endblock %}
