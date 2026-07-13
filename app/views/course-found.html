@@ -16,44 +16,110 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <span class="govuk-caption-xl">
-        Add an apprenticeship
+ <span class="govuk-caption-xl">
+       Add an apprenticeship
       </span>
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
-      {{ course.title }}
-      </h1>
 
-      <p class="govuk-body-l govuk-!-margin-bottom-8">Only apprenticeships currently available for delivery are shown.</p>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      User researcher (level 4)</h1>
+      
+      <!-- Set up status coloured tags -->
+       {% set tagClass = "" %}
 
+{% if course.status == "Open to new starts" %}
+  {% set tagClass = "govuk-tag--green" %}
+{% elif course.status == "Last start date added" %}
+  {% set tagClass = "govuk-tag--orange" %}
+{% elif course.status == "Marked for removal" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% elif course.status == "Closed to new starts" %}
+  {% set tagClass = "govuk-tag--light-grey" %}
+{% elif course.status == "Not available yet" %}
+  {% set tagClass = "govuk-tag--yellow" %}
+{% elif course.status == "More details needed" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% endif %}
 
+<!-- Summary component -->
 
-<form method="post" action="/individual-course">
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-    <label class="govuk-label" for="selected-course">
-    Start typing the apprenticeship name or code
-  </label>
+{% set rows = [
+  {
+    key: {
+      text: "Type"
+    },
+    value: {
+      text: 'Apprenticeship'
+    }
+  },
+  {
+    key: {
+      text: "Sector"
+    },
+    value: {
+      text: 'Digital'
+    }
+  },
+  {
+    key: {
+      text: "LARS code"
+    },
+    value: {
+      text: 535
+    }
+  },
+  {
+    key: {
+      text: "Delivery status"
+    },
+    
+value: {
+        html: govukTag({
+          text: 'Not available yet',
+          classes: tagClass
+        })
+      }
 
-  <div id="autocomplete-container"></div>
+  }
+] %}
 
-  <input type="hidden" name="course" id="selected-course">
+{{ govukSummaryList({
+  rows: rows
+}) }}
 
-  <button class="govuk-button govuk-!-margin-top-7">Continue</button>
-</form>
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  html: "This course is not yet available for delivery. You can add this now and complete your setup. You’ll be able to deliver it once it becomes available.",
+  iconFallbackText: "Warning"
+}) }}
 
-<div class="govuk-!-margin-top-6 govuk-!-margin-bottom-6">
-<h2 class="govuk-heading-m">
-      If you cannot find an apprenticeship
-      </h2>
-      <p class="govuk-body">Some apprenticeships may not appear because:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>they are not available yet</li>
-        <li>they are restricted to certain providers</li>
-      </ul>
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-      <a class="govuk-link" href="#">Request an apprenticeship</a>
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  name: "changedName",
+  fieldset: {
+    legend: {
+      text: "Is this the correct apprenticeship?",
+      isPageHeading: false,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
 
+<button class="govuk-button govuk-!-margin-top-2">Continue</button>
 
-    </div>
   </div>
   </div>
 

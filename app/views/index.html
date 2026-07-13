@@ -1,19 +1,104 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="Dashboard" %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+    <!-- {% include "govuk-prototype-kit/includes/homepage-top.njk" %} -->
 
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
+      Wisdom Intel
     </h1>
+     <span class="govuk-caption-m">
+       UKPRN: 100474641
+      </span>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+      <hr class="govuk-section-break--xl govuk-section-break--visible">
+
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Add new learners</a>
+    <ul>
+      <li>upload a CSV file</li>
+      <li>manually enter details</li>
+      <li>create a new cohort</li>
+      <li>add to an existing cohort</li>
+    </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+      <a href="#" class="govuk-heading-m">Add an employer</a>
+      <p>Ask an employer to create an apprenticeship or apprenticeship unit service account, add you as a training provider and set your permissions.</p>
+    </div>
+
+    </div>
+
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Get funding for non-levy employers</a>
+      <p>Secure funding for a non-levy employer to train an apprentice or learner.</p>
+    </div>
+
+      <div class="govuk-grid-column-one-half">
+        <a href="#" class="govuk-heading-m">View employers and manage permissions</a>
+      <p>View your current employers and permissions, and ask an employer to update your permissions.</p>
+    </div>
+    </div>
+
+        <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Learner requests</a>
+      <p>Review, edit, approve and add learners. </p>
+    </div>
+
+      <div class="govuk-grid-column-one-half">
+        <a href="#" class="govuk-heading-m">Manage your funding reserved for non-levy employers</a>
+      <p>Add learner information to funding you have already reserved for non-levy employers.</p>
+    </div>
+    </div>
+
+        <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Manage your learners</a>
+      <p>View and update approved learner records.</p>
+    </div>
+
+      <div class="govuk-grid-column-one-half">
+        <a href="#" class="govuk-heading-m">Recruit learners</a>
+      <p>Create a vacancy to recruit a learner and manage application.</p>
+    </div>
+    </div>
+
+        <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Manage your training and venues</a>
+      <p>Add and manage apprenticeship units, standards and training venues that appear on Find apprenticeship training.</p>
+    </div>
+
+      <div class="govuk-grid-column-one-half">
+        <a href="#" class="govuk-heading-m">Developer APIs</a>
+      <p>Integrate our APIs to help with recruitment or to track learner progress using your own systems.
+</p>
+    </div>
+    </div>
+
+        <div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <a href="#" class="govuk-heading-m">Your feedback</a>
+      <p>Your feedback from employers and learners. </p>
+    </div>
+
+      <div class="govuk-grid-column-one-half">
+        <a href="#" class="govuk-heading-m">View employer requests for training</a>
+      <p>View employer requests, share your contact details with employers and see other courses you could offer.</p>
+    </div>
+    </div>
+
+
+    <!-- {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %} -->
   </div>
 </div>
 
