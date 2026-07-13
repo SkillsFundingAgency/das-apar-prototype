@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Add an apprenticeship
+  Course found
 {% endblock %}
 
 {% block containerStart %}
@@ -16,15 +16,18 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      <span class="govuk-caption-xl">
+        Add an apprenticeship
+      </span>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
-      Add an apprenticeship
+      {{ course.title }}
       </h1>
 
       <p class="govuk-body-l govuk-!-margin-bottom-8">Only apprenticeships currently available for delivery are shown.</p>
 
 
 
-<form method="post" action="/course-found">
+<form method="post" action="/individual-course">
 
     <label class="govuk-label" for="selected-course">
     Start typing the apprenticeship name or code

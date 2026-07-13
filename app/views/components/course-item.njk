@@ -1,7 +1,29 @@
 <div class="course-item js-course-item">
+
+{% set tagClass = "" %}
+
+{% if course.status == "Open to new starts" %}
+  {% set tagClass = "govuk-tag--green" %}
+{% elif course.status == "Last start date added" %}
+  {% set tagClass = "govuk-tag--orange" %}
+{% elif course.status == "Marked for removal" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% elif course.status == "Closed to new starts" %}
+  {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
+  {% elif course.status == "Not available yet" %}
+  {% set tagClass = "govuk-tag govuk-tag--light-yellow" %}
+    {% elif course.status == "More details needed" %}
+  {% set tagClass = "govuk-tag govuk-tag--red" %}
+{% endif %}
+
+{{ govukTag({
+  text: course.status,
+  classes: tagClass
+}) }}
+
   <div class="course-title">
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><a href="#">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-1 govuk-!-margin-top-3"><a href="/individual-course/{{ course.larsCode }}">
       {{ course.title }}</a>
     </h2>
     
@@ -14,43 +36,31 @@
   </p>
 
 
-{% if course.status == "Last start date set" and course.laststartDate %}
+{% if course.status == "Last start date added" and course.laststartDate %}
+  <p>
+    <b>Last start date</b>: {{ course.laststartDate }}
+  </p>
+  
+{% endif %}
+
+{% if course.status == "Marked for removal" and course.removalDate %}
+  <p>
+    <b>Removal date</b>: {{ course.removalDate }}
+  </p>
+{% endif %}
+
+{% if course.status == "Closed to new starts" and course.laststartDate %}
   <p>
     <b>Last start date</b>: {{ course.laststartDate }}
   </p>
 {% endif %}
 
-{% if course.status == "Scheduled for removal" and course.removalDate %}
-  <p>
-    <b>Removal date</b>: {{ course.removalDate }}
-  </p>
-
-{% endif %}
 
 
-
-
-{% set tagClass = "" %}
-
-{% if course.status == "Open to new starts" %}
-  {% set tagClass = "govuk-tag--green" %}
-{% elif course.status == "Last start date set" %}
-  {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Scheduled for removal" %}
-  {% set tagClass = "govuk-tag--red" %}
-{% elif course.status == "Closed to new starts" %}
-  {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
-{% endif %}
-
-{{ govukTag({
-  text: course.status,
-  classes: tagClass
-}) }}
-
-{% if course.status == "Scheduled for removal" %}
+{% if course.status == "Marked for removal" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
-  text: "You haven’t delivered this course since [DATE]. It will be removed from your account on 2 July 2026 unless you [ACTION]",
+  html: "This apprenticeship will be removed on " + course.removalDate + " because you have not delivered it recently. Confirm if you still want to offer it.",
   iconFallbackText: "Warning"
 }) }}
 {% endif %}

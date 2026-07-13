@@ -17,179 +17,172 @@ href: "javascript:window.history.back()"
   <div class="govuk-grid-column-two-thirds">
 
 
-
-    {% if showBanner and data['courses'] %}
-
-    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-    {% set lastCourse = data['courses'] | last %}
-
-    {% set html %}
-    <h3 class="govuk-notification-banner__heading">
-      {{ lastCourse }} has been added to the approved list of courses
-    </h3>
-    {% endset %}
-
-    {{ govukNotificationBanner({
-    html: html,
-    type: "success"
-    }) }}
-
-    {% endif %}
-
-
  <span class="govuk-caption-xl">
-       Course details
+       Manage an apprenticeship
       </span>
+
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
-      Academic Professional (Level 7)</h1>
+      {{ course.title }}</h1>
+      
+      <!-- Set up status coloured tags -->
+       {% set tagClass = "" %}
+
+{% if course.status == "Open to new starts" %}
+  {% set tagClass = "govuk-tag--green" %}
+{% elif course.status == "Last start date added" %}
+  {% set tagClass = "govuk-tag--orange" %}
+{% elif course.status == "Marked for removal" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% elif course.status == "Closed to new starts" %}
+  {% set tagClass = "govuk-tag--light-grey" %}
+{% elif course.status == "Not available yet" %}
+  {% set tagClass = "govuk-tag--light-yellow" %}
+{% elif course.status == "More details needed" %}
+  {% set tagClass = "govuk-tag--red" %}
+{% endif %}
+
+<!-- Summary component -->
 
       {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set rows = [
+   {
+    key: {
+      text: "ST Code"
+    },
+    value: {
+      text: course.stCode
+    }
+  },
+  {
+    key: {
+      text: "Type"
+    },
+    value: {
+      text: 'Apprenticeship'
+    }
+  },
+  {
+    key: {
+      text: "Sector"
+    },
+    value: {
+      text: course.sector
+    }
+  },
+  {
+    key: {
+      text: "LARS code"
+    },
+    value: {
+      text: course.larsCode
+    }
+  },
+  {
+    key: {
+      text: "Delivery status"
+    },
+    
+value: {
+        html: govukTag({
+          text: course.status,
+          classes: tagClass
+        })
+      }
+
+  }
+] %}
+
+{% if course.status == "Last start date added" %}
+  {% set rows = (rows.push({
+    key: {
+      text: "Last start date"
+    },
+    value: {
+      text: course.laststartDate
+    }
+  }), rows) %}
+{% endif %}
+
+{% if course.status == "Marked for removal" %}
+  {% set rows = (rows.push({
+    key: {
+      text: "Removal date"
+    },
+    value: {
+      text: course.removalDate
+    }
+  }), rows) %}
+{% endif %}
+
+{{ govukSummaryList({
+  rows: rows
+}) }}
+
+{% if course.status == "Marked for removal" %}
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  html: "This apprenticeship will be removed on " + course.removalDate + " because you have not delivered it recently. Confirm if you still want to offer it.",
+  iconFallbackText: "Warning"
+}) }}
+{% endif %}
+
+    <h2>Information that is specific for this apprenticeship</h2>
+
+    <h3>Contact details</h3>
+    <p>These are the contact details that show on Find training for learners for this short course. </p>
+
+     {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {{ govukSummaryList({
   rows: [
     {
       key: {
-        text: "Type"
+        text: "Email address"
       },
       value: {
-        text: "Apprenticeship"
+        text: "info@example.com"
       }
     },
     {
       key: {
-        text: "Sector"
+        text: "Telephone number"
       },
       value: {
-        text: "Education and early years"
+        text: "01865 437166"
       }
     },
     {
       key: {
-        text: "LARS code"
+        text: "Website page"
       },
       value: {
-        text: "108"
-      }
-    },
-    {
-      key: {
-        text: "Status"
-      },
-      value: {
-        text: 'Unrestricted'
+        text: "www.example.com"
       }
     }
   ]
 }) }}
 
-    <h2>Training providers currently delivering this course</h2>
+<a class="govuk-link" href="#">Update these contact details</a>
 
-    <p>If you want to remove or add any providers to this list, you will need to restrict the course. </p>
+    <h2>Training options</h2>
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
+    
 
-    {{ govukButton({
-    text: "Restrict this course",
-    href: '/restrict-course-confirmation'
-    }) }}
+<a class="govuk-link" href="#">Edit training locations</a>
 
-
-  </div>
-</div>
-
-
-
-<div class="govuk-grid-row govuk-!-margin-top-4">
-
-  <!-- LEFT: FILTERS -->
-
-  <div class="govuk-grid-column-one-third faa-filter">
-
-    <div class="faa-filter__header">
-      <h2 class="govuk-heading-m faa-filter__heading">Filter</h2>
+    <div class="action-container">
+      <h2 class="govuk-heading-m">Actions</h2>
+      
+      <a class="govuk-link" href="#">Delete apprenticeship</a>
     </div>
 
-    <div class="faa-filter__body">
-      <div class="govuk-form-group">
 
+    <hr class="govuk-section-break--xl govuk-section-break--visible">
 
-        <label class="govuk-fieldset__legend govuk-fieldset__legend--m" for="course-name">
-          Provider name
-        </label>
-        <div id="course-name-hint" class="govuk-hint">
-          Search by provider name or UKPRN
-        </div>
-
-        <input class="govuk-input" id="course-name" name="course-name" type="text">
-      </div>
-
-      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-
-<!-- 
-      <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            Apprenticeship level
-          </legend>
-
-          <div class="govuk-checkboxes">
-
-            {% for level in ["Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"] %}
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" type="checkbox" name="level" value="{{ level }}">
-              <label class="govuk-label govuk-checkboxes__label">
-                {{ level }}
-              </label>
-            </div>
-            {% endfor %}
-
-          </div> -->
-      <!-- </div> -->
-      </fieldset>
-
-      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-
-      {{ govukButton({
-      text: "Apply filter"
-      }) }}
-    </div>
-  </div>
-
-  <!-- RIGHT: RESULTS -->
-
-
-
-
-
-
-
-
-  <div class="course-list govuk-grid-column-two-thirds">
-    <div class="govuk-!-margin-bottom-4">
-      <span class="govuk-body"><strong>20 providers</strong></span>
-
-      <span style="float:right">
-        Sorted by: <strong>Name of provider</strong>
-      </span>
-    </div>
-
-    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-">
-
-
-{% for provider in providers %}
-  {% set provider = provider %}
-  {% include "components/provider-item.njk" %}
-{% endfor %}
-
-<nav class="pagination" aria-label="Pagination">
-  <ul class="pagination__list" id="pagination-list"></ul>
-</nav>
-
-
+    <a class="govuk-link" href="/manage-your-standards">Back to manage your standards</a>
 
   </div>
-
 </div>
 
 

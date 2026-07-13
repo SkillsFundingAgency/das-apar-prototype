@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+Manage your apprenticeships
 {% endblock %}
 
 {% block containerStart %}
@@ -40,26 +40,38 @@ href: "javascript:window.history.back()"
 
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
-      Manage your standards</h1>
+      Manage your apprenticeships</h1>
 
-    <p>Add, manage or remove apprenticeships from your provider account. You can change your training options or contact details for specific courses by selecting it in the list.</p>
-    <p>Any changes you make will update Find apprenticeship training. </p>
+    <p>Add, manage or remove apprenticeships from your provider account. Any changes you make will update Find apprenticeship training.</p>
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="action-container">
+      <h2>Add an apprenticeship</h2>
+      <p>Add a new apprenticeship to your offering</p>
+         {% from "govuk/components/button/macro.njk" import govukButton %}
 
     {{ govukButton({
-    text: "Add a standard",
+    text: "Add an apprenticeship",
     href: '/add-new-standard'
     }) }}
+    </div>
+
+
+
 
 
   </div>
 </div>
 
 
+    <hr class="govuk-section-break--xl govuk-section-break--visible">
+  
+
+
 
 <div class="govuk-grid-row govuk-!-margin-top-4">
-  <h3>Your apprenticeships</h3>
+  <h2>Your apprenticeships</h2>
+  <p>This is a list of your current apprenticeships (content here)</p>
 
 <div class="govuk-grid-row">
 
@@ -96,6 +108,37 @@ href: "javascript:window.history.back()"
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
 
+        <!--  Count number of courses with a particular status -->
+
+{% set openCount = 0 %}
+{% set lastStartCount = 0 %}
+{% set notAvailableCount = 0 %}
+{% set closedCount = 0 %}
+{% set removedCount = 0 %}
+{% set detailsCount = 0 %}
+
+{% for course in courses %}
+  {% if course.status == "Open to new starts" %}
+    {% set openCount = openCount + 1 %}
+
+  {% elif course.status == "Last start date added" %}
+    {% set lastStartCount = lastStartCount + 1 %}
+
+  {% elif course.status == "Not available yet" %}
+    {% set notAvailableCount = notAvailableCount + 1 %}
+
+  {% elif course.status == "Closed to new starts" %}
+    {% set closedCount = closedCount + 1 %}
+
+      {% elif course.status == "Marked for removal" %}
+    {% set removedCount = removedCount + 1 %}
+
+          {% elif course.status == "More details needed" %}
+    {% set detailsCount = detailsCount + 1 %}
+  {% endif %}
+{% endfor %}
+
+
         <!-- Status filter -->
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset">
@@ -104,35 +147,131 @@ href: "javascript:window.history.back()"
               Delivery status
             </legend>
 
-            <div class="govuk-checkboxes">
+            <div class="govuk-checkboxes govuk-checkboxes--small">
 
-              {% set statusOptions = [
-                "Open to new starts",
-                "Last start date set",
-                "Scheduled for removal",
-                "Closed to new starts"
-              ] %}
+              <!--  Set up status options -->
 
-              {% for status in statusOptions %}
-                <div class="govuk-checkboxes__item">
-                  <input
-                    class="govuk-checkboxes__input"
-                    type="checkbox"
-                    name="status"
-                    value="{{ status }}"
-                    {% if data.status and status in data.status %}checked{% endif %}
-                  >
-                  <label class="govuk-label govuk-checkboxes__label">
-                    {{ status }}
-                  </label>
-                </div>
-              {% endfor %}
+{% set statusOptions = [
+  {
+    label: "Open to new starts",
+    count: openCount,
+    hint: "This course is currently active and taking new learners"
+  },
+  {
+    label: "Last start date added",
+    count: lastStartCount,
+    hint: "Course will be wound down after this date"
+  },
+  {
+    label: "Not available yet",
+    count: notAvailableCount,
+    hint: "The course has been approved but cannot yet accept learners"
+  },
+  {
+    label: "Closed to new starts",
+    count: closedCount,
+    hint: "No new learners can join this course"
+  }
+] %}
+
+              
+{% for status in statusOptions %}
+  <div class="govuk-checkboxes__item">
+    <input
+      class="govuk-checkboxes__input"
+      id="status-{{ loop.index }}"
+      type="checkbox"
+      name="status"
+      value="{{ status.label }}"
+      {% if data.status and status.label in data.status %}checked{% endif %}
+    >
+
+
+<label
+  class="govuk-label govuk-checkboxes__label"
+  for="status-{{ loop.index }}"
+>
+  {{ status.label }}
+  <span class="govuk-hint govuk-!-display-inline">
+    ({{ status.count }})
+  </span>
+</label>
+
+
+    <div class="govuk-hint govuk-checkboxes__hint">
+      {{ status.hint }}
+    </div>
+  </div>
+{% endfor %}
 
             </div>
           </fieldset>
         </div>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+  Action required
+</legend>
+
+<div class="govuk-checkboxes govuk-checkboxes--small">
+
+              <!--  Set up action options -->
+
+{% set actionOptions = [
+    {
+    label: "Marked for removal",
+    count: removedCount,
+    hint: "This will be removed once the date has passed"
+  },
+    {
+    label: "More details needed",
+    count: detailsCount,
+    hint: "The course has been approved but cannot yet accept learners."
+  }
+] %}
+
+              
+{% for action in actionOptions %}
+  <div class="govuk-checkboxes__item">
+    <input
+      class="govuk-checkboxes__input"
+      id="action-{{ loop.index }}"
+      type="checkbox"
+      name="actionRequired"
+      value="{{ action.label }}"
+      {% if data.actionRequired and status.label in data.actionRequired %}checked{% endif %}
+    >
+
+
+<label
+  class="govuk-label govuk-checkboxes__label"
+  for="action-{{ loop.index }}"
+>
+  {{ action.label }}
+  <span class="govuk-hint govuk-!-display-inline">
+    ({{ action.count }})
+  </span>
+</label>
+
+
+    <div class="govuk-hint govuk-checkboxes__hint">
+      {{ action.hint }}
+    </div>
+  </div>
+{% endfor %}
+
+            </div>
+          </fieldset>
+        </div>
+
+
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+
+        <!--  Apply filters button -->
 
         {{ govukButton({
           text: "Apply filters",
@@ -220,7 +359,7 @@ href: "javascript:window.history.back()"
     {% endif %}
 
 {% if totalPages > 1 %}
-<nav class="govuk-pagination" aria-label="Pagination">
+<nav class="govuk-pagination govuk-!-margin-top-6" aria-label="Pagination">
 
   <ul class="govuk-pagination__list">
 

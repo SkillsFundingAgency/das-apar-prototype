@@ -8,24 +8,40 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 // Add your routes here
 
-//Apprenticeship units
 
-router.get('/apprenticeship-units/apprenticeship-unit-list', function (req, res) {
+// go to correct course from list
+const courses = require('./data/courses')
 
-  // Store current banner state
-  const showBanner = req.session.data['showBanner']
+router.get('/individual-course/:larsCode', function (req, res) {
 
-  // Immediately reset it
-  req.session.data['showBanner'] = false
+  const course = courses.find(
+    course => course.larsCode === req.params.larsCode
+  )
 
-  // Render page with the value
-  res.render('apprenticeship-units/apprenticeship-unit-list', {
-    showBanner: showBanner
+  res.render('individual-course', {
+    course
   })
+
 })
 
+// //Apprenticeship units
 
-// Add provider course to course list
+// router.get('/apprenticeship-units/apprenticeship-unit-list', function (req, res) {
+
+//   // Store current banner state
+//   const showBanner = req.session.data['showBanner']
+
+//   // Immediately reset it
+//   req.session.data['showBanner'] = false
+
+//   // Render page with the value
+//   res.render('apprenticeship-units/apprenticeship-unit-list', {
+//     showBanner: showBanner
+//   })
+// })
+
+
+// // Add provider course to course list
 const defaultCourses = require('./data/courses')
 
 // Show course list (alphabetical, combined)
@@ -48,25 +64,25 @@ router.get('/manage-your-standards', function (req, res) {
 
 
 // providers
-const defaultProviders = require('./data/providers')
+// const defaultProviders = require('./data/providers')
 
-// Show course list (alphabetical, combined)
-router.get('/individual-course', function (req, res) {
+// // Show course list (alphabetical, combined)
+// router.get('/individual-course', function (req, res) {
 
-  const addedProviders = req.session.data.addedProviders || []
+//   const addedProviders = req.session.data.addedProviders || []
 
-  // Combine default + added
-  const allProviders = [...defaultProviders, ...addedProviders]
+//   // Combine default + added
+//   const allProviders = [...defaultProviders, ...addedProviders]
 
-  // Sort alphabetically
-  allProviders.sort((a, b) => {
-    return a.title.localeCompare(b.title)
-  })
+//   // Sort alphabetically
+//   allProviders.sort((a, b) => {
+//     return a.title.localeCompare(b.title)
+//   })
 
-  res.render('individual-course', {
-    courses: allProviders
-  })
-})
+//   res.render('individual-course', {
+//     courses: allProviders
+//   })
+// })
 
 // Handle adding a new course
 // router.post('/restrict-new-course', function (req, res) {
