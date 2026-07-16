@@ -5,7 +5,7 @@
 
 window.GOVUKPrototypeKit.documentReady(() => {
 
-  //Course autocomplete
+  //Apprenticeship course autocomplete
 accessibleAutocomplete({
   element: document.querySelector('#autocomplete-container'),
   id: 'course-autocomplete',
@@ -30,14 +30,34 @@ accessibleAutocomplete({
     'Civil Engineer (Level 6)',
     'Registered Nurse (Level 6)',
     'Advanced Clinical Practitioner (Level 7)',
-    'Domestic Heating Technician (Level 3)'
+    'Domestic Heating Technician (Level 3)',
+    'Solar PV installation and maintenance – Apprenticeship unit (level 3)',
   ],
   onConfirm: function (val) {
     document.querySelector('#selected-course').value = val
   }
 })
 
+
+  //Apprenticeship unit course autocomplete
+accessibleAutocomplete({
+  element: document.querySelector('#autocomplete-container-unit'),
+  id: 'unit-autocomplete',
+  source: [
+    'AI leadership - AI adoption, procurement and governance - Apprenticeship unit (level 5)',
+    'AI leadership - AI delivery and organisational transformation - Apprenticeship unit (level 5)',
+    'AI leadership – AI strategy and opportunity - Apprenticeship unit (level 5)',
+    'Electric vehicle (EV) charging point installation and maintenance – Apprenticeship unit (level 3)',
+    'Mechanical fitting and assembly – Apprenticeship unit (level 2)',
+    'Permanent modular building assembly – Apprenticeship unit (level 2)',
+    'Solar PV installation and maintenance – Apprenticeship unit (level 3)',
+    'Welding (mechanised) – Apprenticeship unit (level 2)'
+  ],
+  onConfirm: function (val) {
+    document.querySelector('#selected-unit').value = val
+  }
 })
+
 
 //pagination
 document.addEventListener('DOMContentLoaded', function () {
@@ -114,4 +134,5 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialise
   showPage(1)
 
+})
 })

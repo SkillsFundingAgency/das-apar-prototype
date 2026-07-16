@@ -1,0 +1,36 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Apprenticeship unit found
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/manage-your-apprenticeship-units"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% call govukPanel({
+  titleText: "Your request has been sent"
+}) %}
+Solar PV installation and maintenance – Apprenticeship unit (level 3)
+  <!-- Your reference number<br>
+  <strong>HDJ2123F</strong> -->
+{% endcall %}
+      
+<p>Your request for <b>Solar PV installation and maintenance – Apprenticeship unit (level 3)</b> has been sent to our team. We will aim to update you with an outcome soon.</p>
+
+<a class="govuk-link" href="/manage-your-apprenticeship-units">Back to manage your apprenticeship units</a>
+
+  </div>
+  </div>
+
+{% endblock %}

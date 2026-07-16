@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Request an apprenticeship unit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-1">
+      Request an apprenticeship unit
+      </h1>
+
+      <p class="govuk-body-l govuk-!-margin-bottom-8">You can ask to deliver an apprenticeship unit if it is currently not available to your organisation in Course management.</p><p>We will review your request. </p>
+
+
+
+<form method="post" action="/unit-found">
+
+    <label class="govuk-label" for="selected-course">
+    Start typing the apprenticeship unit name or code
+  </label>
+
+  <div id="autocomplete-container"></div>
+
+  <input type="hidden" name="course" id="selected-course">
+
+  <button class="govuk-button govuk-!-margin-top-7">Continue</button>
+</form>
+  </div>
+  </div>
+
+{% endblock %}

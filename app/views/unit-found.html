@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Apprenticeship unit found
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+ <span class="govuk-caption-xl">
+       Request an apprenticeship unit
+      </span>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      Solar PV installation and maintenance – Apprenticeship unit (level 3)</h1>
+      
+<!-- Summary component -->
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set rows = [
+  {
+    key: {
+      text: "Type"
+    },
+    value: {
+      text: 'Apprenticeship Unit'
+    }
+  },
+  {
+    key: {
+      text: "Sector"
+    },
+    value: {
+      text: 'Construction and the built environment'
+    }
+  },
+  {
+    key: {
+      text: "LARS code"
+    },
+    value: {
+      text: 535
+    }
+  }
+] %}
+
+{{ govukSummaryList({
+  rows: rows
+}) }}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+
+  {{ govukButton({
+  text: "Request apprenticeship unit",
+  href: '/request-unit-confirm'
+}) }}
+
+  <a class="govuk-link" href="/manage-your-apprenticeship-units">Cancel</a>
+</div>
+
+  </div>
+  </div>
+
+{% endblock %}
