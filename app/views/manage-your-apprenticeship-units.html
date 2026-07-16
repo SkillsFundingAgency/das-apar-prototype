@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-Manage your apprenticeships
+Manage your apprenticeship units
 {% endblock %}
 
 {% block containerStart %}
@@ -18,41 +18,20 @@ href: "/training-type"
 
 
 
-    {% if showBanner and data['courses'] %}
-
-    {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-    {% set lastCourse = data['courses'] | last %}
-
-    {% set html %}
-    <h3 class="govuk-notification-banner__heading">
-      {{ lastCourse }} has been added to the approved list of courses
-    </h3>
-    {% endset %}
-
-    {{ govukNotificationBanner({
-    html: html,
-    type: "success"
-    }) }}
-
-    {% endif %}
-
-
-
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
-      Manage your apprenticeships</h1>
+      Manage your apprenticeship units</h1>
 
-    <p>Add, manage or remove apprenticeships from your provider account. Any changes you make will update Find apprenticeship training.</p>
+    <p>Add, manage or remove apprenticeship units from your provider account. Any changes you make will update Find apprenticeship training.</p>
 
 
     <div class="action-container">
-      <h2>Add an apprenticeship</h2>
-      <p>Add a new apprenticeship to your offering on Find apprenticeship training. </p>
+      <h2>Add an apprenticeship unit</h2>
+      <p>Add a new apprenticeship unit to your offering on Find apprenticeship training. </p>
          {% from "govuk/components/button/macro.njk" import govukButton %}
 
     {{ govukButton({
-    text: "Add an apprenticeship",
-    href: '/add-new-standard'
+    text: "Add an apprenticeship unit",
+    href: '/cannot-add-units'
     }) }}
     </div>
 
@@ -127,8 +106,8 @@ key: {
 
 
 <div class="govuk-grid-row govuk-!-margin-top-4">
-  <h2>Your apprenticeships</h2>
-  <p>This is a list of your current apprenticeships.</p>
+  <h2>Your apprenticeship units</h2>
+  <p>This is a list of your current apprenticeship units.</p>
 
 <div class="govuk-grid-row">
 

@@ -12,6 +12,13 @@
   {% set tagClass = "govuk-tag govuk-tag--light-yellow" %}
 {% endif %}
 
+
+{% set isMarkedForRemoval =
+  course.action == "Marked for removal"
+  and course.larsCode not in (data.keptCourses or [])
+%}
+
+
 {{ govukTag({
   text: course.status,
   classes: tagClass
@@ -47,7 +54,7 @@
 
 
 
-{% if course.action == "Marked for removal" %}
+{% if isMarkedForRemoval %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: "This apprenticeship will be removed on " + course.removalDate + " because you have not delivered it recently. Confirm if you still want to offer it.",
@@ -55,7 +62,7 @@
 }) }}
 {% endif %}
 
-{% if course.action == "More details needed" %}
+{% if course.action == "Details needed" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: "This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. ",

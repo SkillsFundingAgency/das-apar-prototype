@@ -8,7 +8,6 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 // Add your routes here
 
-
 // go to correct course from list
 const courses = require('./data/courses')
 
@@ -21,6 +20,38 @@ router.get('/individual-course/:larsCode', function (req, res) {
   res.render('individual-course', {
     course
   })
+
+})
+
+//route users from marked for removal to keep course
+
+// Show the confirmation page
+router.get('/confirm-keep-course/:larsCode', function (req, res) {
+
+  const course = courses.find(
+    course => course.larsCode === req.params.larsCode
+  )
+
+  res.render('confirm-keep-course', {
+    course
+  })
+
+})
+
+// User confirms they want to keep the course
+router.post('/confirm-keep-course/:larsCode', function (req, res) {
+
+  const larsCode = req.params.larsCode
+
+  if (!req.session.data.keptCourses) {
+    req.session.data.keptCourses = []
+  }
+
+  if (!req.session.data.keptCourses.includes(larsCode)) {
+    req.session.data.keptCourses.push(larsCode)
+  }
+
+  res.redirect('/individual-course/' + larsCode + '?success=true')
 
 })
 
@@ -41,7 +72,7 @@ router.get('/individual-course/:larsCode', function (req, res) {
 // })
 
 
-// // Add provider course to course list
+// // show courses in manage your standards
 const defaultCourses = require('./data/courses')
 
 // Show course list (alphabetical, combined)
@@ -61,6 +92,21 @@ router.get('/manage-your-standards', function (req, res) {
     courses: allCourses
   })
 })
+
+
+// // show units in manage your apprenticeship units
+router.get('/manage-your-apprenticeship-units', function(req, res) {
+
+  const units = courses.filter(
+    course => course.type === 'Unit'
+  )
+
+  res.render('manage-your-apprenticeship-units', {
+    courses: units
+  })
+
+})
+
 
 
 // providers

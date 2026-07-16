@@ -132,6 +132,19 @@ $govuk-font-family: 'Inter', sans-serif;
         padding: 20px;
         min-height: 178px;
     }
+
+    .govuk-summary-list {
+        margin-bottom: 0!important;
+    }
+    
+    .govuk-summary-list__key {
+        width: auto;
+    }
+
+    .govuk-summary-list__value {
+        display: none;
+        width: auto;
+    }
 }
 
 .govuk-tag {

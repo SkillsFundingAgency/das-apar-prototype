@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Course found
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+ <span class="govuk-caption-xl">
+       Marked for removal
+      </span>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      Confirm if you want to keep offering this apprenticeship</h1>
+      
+      <div class="action-container govuk-!-margin-bottom-6">
+        <h2 class="govuk-!-margin-bottom-2">{{ course.title }}</h2>
+        <p class="govuk-!-margin-bottom-1">Lars code: {{ course.larsCode }}</p>
+      
+      </div>
+
+
+<form method="post">
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+
+{{ govukButton({
+  text: "Confirm apprenticeship"
+}) }}
+
+
+  <a class="govuk-link" href="#">Cancel</a>
+</div>
+
+</form>
+
+
+  </div>
+  </div>
+
+{% endblock %}

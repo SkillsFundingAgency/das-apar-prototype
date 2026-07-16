@@ -1,0 +1,47 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Cannot add apprenticeship units
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+ <!-- <span class="govuk-caption-xl">
+       Marked for removal
+      </span> -->
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      You cannot add apprenticeship units right now</h1>
+
+<p class="govuk-body-l">This is because your course offering is managed by the Department for Education and you can only add approved apprenticeships units. </p>
+
+
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+
+{{ govukButton({
+  text: "Request an apprenticeship unit",
+  html: "/request-apprenticeship-unit"
+}) }}
+
+
+  <!-- <a class="govuk-link" href="#">Cancel</a> -->
+</div>
+
+
+  </div>
+  </div>
+
+{% endblock %}

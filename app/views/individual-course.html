@@ -1,20 +1,31 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{{ course.title }} - Manage apprenticeship
 {% endblock %}
 
 {% block containerStart %}
+
+
 {{ govukBackLink({
-text: "Back",
-href: "javascript:window.history.back()"
+  text: "Back",
+  href: "/manage-your-apprenticeship-units" if course.type == "Unit" else "/manage-your-standards"
 }) }}
+
+
 {% endblock %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+
+    {% if data.success == "true" %}
+  {{ govukNotificationBanner({
+    type: "success",
+    text: "This course is no longer marked for removal."
+  }) }}
+{% endif %}
 
 
  <span class="govuk-caption-xl">
@@ -31,14 +42,10 @@ href: "javascript:window.history.back()"
   {% set tagClass = "govuk-tag--green" %}
 {% elif course.status == "Last start date added" %}
   {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Marked for removal" %}
-  {% set tagClass = "govuk-tag--red" %}
 {% elif course.status == "Closed to new starts" %}
   {% set tagClass = "govuk-tag--light-grey" %}
 {% elif course.status == "Not available yet" %}
   {% set tagClass = "govuk-tag--light-yellow" %}
-{% elif course.status == "More details needed" %}
-  {% set tagClass = "govuk-tag--red" %}
 {% endif %}
 
 <!-- Summary component -->
@@ -51,7 +58,7 @@ href: "javascript:window.history.back()"
       text: "ST Code"
     },
     value: {
-      text: course.stCode
+      text: "105256"
     }
   },
   {
@@ -59,7 +66,7 @@ href: "javascript:window.history.back()"
       text: "Type"
     },
     value: {
-      text: 'Apprenticeship'
+      text: 'Apprenticeship ' + course.type
     }
   },
   {
@@ -104,13 +111,13 @@ value: {
   }), rows) %}
 {% endif %}
 
-{% if course.status == "Marked for removal" %}
+{% if course.status == "Closed to new starts" %}
   {% set rows = (rows.push({
     key: {
-      text: "Removal date"
+      text: "Last start date"
     },
     value: {
-      text: course.removalDate
+      text: course.laststartDate
     }
   }), rows) %}
 {% endif %}
@@ -119,20 +126,75 @@ value: {
   rows: rows
 }) }}
 
-{% if course.status == "Marked for removal" %}
+{% if course.status == "Last start date added" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
-  html: "This apprenticeship will be removed on " + course.removalDate + " because you have not delivered it recently. Confirm if you still want to offer it.",
+  html: " This course has a last start date set. Once the last start date has passed, you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
   iconFallbackText: "Warning"
 }) }}
 
-<a class="govuk-link" href="/#">Keep this apprenticeship</a>
 {% endif %}
 
-    <h2>Information that is specific for this apprenticeship</h2>
+{% if course.status == "Closed to new starts" %}
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  html: "This course is closed to new starts. This means you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
+  iconFallbackText: "Warning"
+}) }}
 
-    <h3>Contact details</h3>
-    <p>These are the contact details that show on Find training for learners for this short course. </p>
+{% endif %}
+
+
+{% if course.action == "Marked for removal"
+   and course.larsCode not in (data.keptCourses or []) %}
+
+<div class="action-container govuk-!-margin-top-8 govuk-!-margin-bottom-7">
+  <h2>Action required</h2>
+  <p>This course has had no learners for an extended period and appears to be inactive. It will be removed on <b>{{ course.removalDate }}</b> unless you confirm that you still offer it.</p>
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+
+{{ govukButton({
+  text: "Keep this course",
+  href: "/confirm-keep-course/" + course.larsCode
+}) }}
+
+
+  <a class="govuk-link" href="#">Remove course</a>
+</div>
+
+</div>
+
+{% endif %}
+
+{% if course.action == "Details needed" %}
+
+<div class="action-container govuk-!-margin-top-8 govuk-!-margin-bottom-7">
+  <h2>Action required</h2>
+  <p>This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. </p>
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+
+{{ govukButton({
+  text: "Add missing details",
+  href: "#"
+}) }}
+</div>
+
+</div>
+
+{% endif %}
+
+    <h2>Contact details</h2>
+    <p>If there is a specific person of team that should be contacted for this apprenticeship, update these contact details.</p>
 
      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -144,6 +206,15 @@ value: {
       },
       value: {
         text: "info@example.com"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
       }
     },
     {
@@ -152,6 +223,15 @@ value: {
       },
       value: {
         text: "01865 437166"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
       }
     },
     {
@@ -160,24 +240,104 @@ value: {
       },
       value: {
         text: "www.example.com"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
       }
     }
   ]
 }) }}
 
-<a class="govuk-link" href="#">Update these contact details</a>
+    <h2>Training delivery locations</h2>
+    <p>This is where you have told us you can deliver training for this apprenticeship unit.</p>
 
-    <h2>Training options</h2>
+         {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-    
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Delivery locations"
+      },
+      value: {
+        html: "At your training venue<br/>At employer’s location"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Your training venues"
+      },
+      value: {
+        text: "Practical Genius"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "National provider"
+      },
+      value: {
+        text: "No"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Areas you can deliver at an employer’s location"
+      },
+      value: {
+        html: "Bedford<br/>Norfork<br/>Lincolnshire"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "name"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
 
-<a class="govuk-link" href="#">Edit training locations</a>
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
-    <div class="action-container">
-      <h2 class="govuk-heading-m">Actions</h2>
-      
-      <a class="govuk-link" href="#">Delete apprenticeship</a>
-    </div>
+{{ govukButton({
+  text: "Delete apprenticeship",
+  classes: "govuk-button--secondary"
+}) }}
 
 
     <hr class="govuk-section-break--xl govuk-section-break--visible">
