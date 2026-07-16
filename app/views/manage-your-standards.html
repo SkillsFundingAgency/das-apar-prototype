@@ -56,6 +56,12 @@ href: "javascript:window.history.back()"
     }) }}
     </div>
 
+        <div class="action-container" govuk-!-margin-top-4>
+      <h2>Action required</h2>
+      <p>These apprenticeships need your attention.</p>
+
+    </div>
+
 
 
 
@@ -114,8 +120,6 @@ href: "javascript:window.history.back()"
 {% set lastStartCount = 0 %}
 {% set notAvailableCount = 0 %}
 {% set closedCount = 0 %}
-{% set removedCount = 0 %}
-{% set detailsCount = 0 %}
 
 {% for course in courses %}
   {% if course.status == "Open to new starts" %}
@@ -129,12 +133,6 @@ href: "javascript:window.history.back()"
 
   {% elif course.status == "Closed to new starts" %}
     {% set closedCount = closedCount + 1 %}
-
-      {% elif course.status == "Marked for removal" %}
-    {% set removedCount = removedCount + 1 %}
-
-          {% elif course.status == "More details needed" %}
-    {% set detailsCount = detailsCount + 1 %}
   {% endif %}
 {% endfor %}
 
@@ -200,66 +198,6 @@ href: "javascript:window.history.back()"
 
     <div class="govuk-hint govuk-checkboxes__hint">
       {{ status.hint }}
-    </div>
-  </div>
-{% endfor %}
-
-            </div>
-          </fieldset>
-        </div>
-
-        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
-
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
-            
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-  Action required
-</legend>
-
-<div class="govuk-checkboxes govuk-checkboxes--small">
-
-              <!--  Set up action options -->
-
-{% set actionOptions = [
-    {
-    label: "Marked for removal",
-    count: removedCount,
-    hint: "This will be removed once the date has passed"
-  },
-    {
-    label: "More details needed",
-    count: detailsCount,
-    hint: "The course has been approved but cannot yet accept learners."
-  }
-] %}
-
-              
-{% for action in actionOptions %}
-  <div class="govuk-checkboxes__item">
-    <input
-      class="govuk-checkboxes__input"
-      id="action-{{ loop.index }}"
-      type="checkbox"
-      name="actionRequired"
-      value="{{ action.label }}"
-      {% if data.actionRequired and status.label in data.actionRequired %}checked{% endif %}
-    >
-
-
-<label
-  class="govuk-label govuk-checkboxes__label"
-  for="action-{{ loop.index }}"
->
-  {{ action.label }}
-  <span class="govuk-hint govuk-!-display-inline">
-    ({{ action.count }})
-  </span>
-</label>
-
-
-    <div class="govuk-hint govuk-checkboxes__hint">
-      {{ action.hint }}
     </div>
   </div>
 {% endfor %}

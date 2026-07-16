@@ -6,14 +6,10 @@
   {% set tagClass = "govuk-tag--green" %}
 {% elif course.status == "Last start date added" %}
   {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Marked for removal" %}
-  {% set tagClass = "govuk-tag--red" %}
 {% elif course.status == "Closed to new starts" %}
   {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
   {% elif course.status == "Not available yet" %}
   {% set tagClass = "govuk-tag govuk-tag--light-yellow" %}
-    {% elif course.status == "More details needed" %}
-  {% set tagClass = "govuk-tag govuk-tag--red" %}
 {% endif %}
 
 {{ govukTag({
@@ -43,12 +39,6 @@
   
 {% endif %}
 
-{% if course.status == "Marked for removal" and course.removalDate %}
-  <p>
-    <b>Removal date</b>: {{ course.removalDate }}
-  </p>
-{% endif %}
-
 {% if course.status == "Closed to new starts" and course.laststartDate %}
   <p>
     <b>Last start date</b>: {{ course.laststartDate }}
@@ -57,10 +47,18 @@
 
 
 
-{% if course.status == "Marked for removal" %}
+{% if course.action == "Marked for removal" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: "This apprenticeship will be removed on " + course.removalDate + " because you have not delivered it recently. Confirm if you still want to offer it.",
+  iconFallbackText: "Warning"
+}) }}
+{% endif %}
+
+{% if course.action == "More details needed" %}
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  html: "This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. ",
   iconFallbackText: "Warning"
 }) }}
 {% endif %}
