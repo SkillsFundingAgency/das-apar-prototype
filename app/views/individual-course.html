@@ -156,7 +156,7 @@ value: {
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-<div class="govuk-button-group">
+<div class="govuk-button-group govuk-!-margin-bottom-0">
 
 {{ govukButton({
   text: "Keep this course",
@@ -181,11 +181,12 @@ value: {
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-<div class="govuk-button-group">
+<div class="govuk-button-group govuk-!-margin-bottom-0">
 
 {{ govukButton({
   text: "Add missing details",
-  href: "#"
+  href: "#",
+  classes: 'govuk-!-margin-bottom-0'
 }) }}
 </div>
 
