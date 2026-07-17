@@ -22,23 +22,6 @@
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
       User researcher (level 4)</h1>
-      
-      <!-- Set up status coloured tags -->
-       {% set tagClass = "" %}
-
-{% if course.status == "Open to new starts" %}
-  {% set tagClass = "govuk-tag--green" %}
-{% elif course.status == "Last start date added" %}
-  {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Marked for removal" %}
-  {% set tagClass = "govuk-tag--red" %}
-{% elif course.status == "Closed to new starts" %}
-  {% set tagClass = "govuk-tag--light-grey" %}
-{% elif course.status == "Not available yet" %}
-  {% set tagClass = "govuk-tag--yellow" %}
-{% elif course.status == "More details needed" %}
-  {% set tagClass = "govuk-tag--red" %}
-{% endif %}
 
 <!-- Summary component -->
 
@@ -77,7 +60,7 @@
 value: {
         html: govukTag({
           text: 'Not available yet',
-          classes: tagClass
+          classes: 'govuk-tag--yellow'
         })
       }
 
