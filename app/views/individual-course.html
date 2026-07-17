@@ -20,7 +20,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% if data.success == "true" %}
+    {% if data.success == "true" and course.larsCode in (data.keptCourses or []) %}
   {{ govukNotificationBanner({
     type: "success",
     text: "This course is no longer marked for removal."
