@@ -83,13 +83,16 @@ router.get('/manage-your-standards', function (req, res) {
   // Combine default + added
   const allCourses = [...defaultCourses, ...addedCourses]
 
+  // Exclude Units
+  const filteredCourses = allCourses.filter(course => course.type !== 'Unit')
+
   // Sort alphabetically
-  allCourses.sort((a, b) => {
+  filteredCourses.sort((a, b) => {
     return a.title.localeCompare(b.title)
   })
 
   res.render('manage-your-standards', {
-    courses: allCourses
+    courses: filteredCourses
   })
 })
 
