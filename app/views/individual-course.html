@@ -194,6 +194,8 @@ value: {
 
 {% endif %}
 
+{% if course.status != "Closed to new starts" %}
+
     <h2>Contact details</h2>
     <p>If there is a specific person of team that should be contacted for this apprenticeship, update these contact details.</p>
 
@@ -333,16 +335,22 @@ value: {
   ]
 }) }}
 
+{% endif %}
+
 
     <h2>Delete this course</h2>
     <p>Deleting a course from your offering will stop you from claiming government funding for it. You will not be able to submit any Individualised Learner Records (ILRs) for it. </p>
     <p>If you choose to delete it, it will be removed from your account and no longer show on Find apprenticeship training. </p>
 
-    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-{% call govukInsetText() %}
-  Do not delete this course if you have learners still completing it. It must stay in your offering to claim government funding.
-{% endcall %}
+<div class="govuk-inset-text">
+
+{% if course.status == "Closed to new starts" %}
+<p><b>You can delete this course if you no longer have learners on it. </b></p>
+{% endif %}
+
+ <p><b>Do not delete this course if you have learners still completing it. It must stay in your offering to claim government funding.</b></p>
+</div>
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 

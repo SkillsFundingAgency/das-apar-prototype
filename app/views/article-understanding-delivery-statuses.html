@@ -1,0 +1,89 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Understanding – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+<!-- {{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }} -->
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Home",
+      href: "#"
+    },
+    {
+      text: "Training provider",
+      href: "#"
+    },
+    {
+      text: "Understanding delivery statuses",
+      href: "#"
+    }
+  ]
+}) }}
+
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-8">
+      Understanding the different delivery statuses </h1>
+
+      {{ govukTag({
+  text: "Training providers",
+  classes: tagClass
+}) }}
+
+
+<h2 class="govuk-!-margin-top-7">Who sets the delivery statuses?</h2>
+
+<p>The Department for Education is responsible for managing delivery statuses.</p>
+
+<p>We use them to manage which training providers deliver different courses, and for how long. </p>
+
+<h2>Status descriptions</h2>
+
+<h3>Not available yet</h3>
+<p>This means the course can be advertised on Find apprenticeship training, but you can’t enrol learners or claim government funding yet.</p>
+<p>When it becomes available, its status will change to open to new starts.</p>
+
+<h3>Open to new starts</h3>
+
+<p>This delivery status appears on courses you currently offer and advertise on Find apprenticeship training.</p>
+<p>You can claim government funding for them by submitting Individualised Learning Records (ILRs).</p>
+
+<h3>Last start date added</h3>
+<p>The Department for Education (DfE) will add a last date for new starts to courses that will not be available in the future.</p>
+<p>This could be because the course is being defunded, or because we want to better manage its delivery.</p>
+<p>You can continue to enrol new government funded learners up until the last start date.</p>
+
+<h3>Closed to new starts</h3>
+<p>This means the last date for new starts set by DfE has now passed.</p>
+
+<p class="govuk-body">If your course is closed to new starts, you will not be able to:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>add new government funded learners </li>
+  <li>advertise it on Find apprenticeship training </li>
+  <li>submit ILRs for learners who start after this date</li>
+</ul>
+
+<p>But you can continue to train learners who are already on the course.</p>
+
+<p class="govuk-caption-m govuk-!-margin-top-8">Last updated 10 August 2026</p>
+
+  </div>
+</div>
+
+
+
+{% endblock %}
