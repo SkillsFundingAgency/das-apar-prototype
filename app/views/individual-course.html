@@ -255,8 +255,8 @@ value: {
   ]
 }) }}
 
-    <h2>Training delivery locations</h2>
-    <p>This is where you have told us you can deliver training for this apprenticeship unit.</p>
+    <h2>Training options</h2>
+    <p>This is where you have told us you can deliver training for this apprenticeship.</p>
 
          {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -332,6 +332,17 @@ value: {
     }
   ]
 }) }}
+
+
+    <h2>Delete this course</h2>
+    <p>Deleting a course from your offering will stop you from claiming government funding for it. You will not be able to submit any Individualised Learner Records (ILRs) for it. </p>
+    <p>If you choose to delete it, it will be removed from your account and no longer show on Find apprenticeship training. </p>
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% call govukInsetText() %}
+  Do not delete this course if you have learners still completing it. It must stay in your offering to claim government funding.
+{% endcall %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 

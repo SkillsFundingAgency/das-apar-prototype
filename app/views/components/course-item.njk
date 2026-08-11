@@ -33,6 +33,10 @@
 
   </div>
 
+{% if course.status == "Closed to new starts" %}
+<p>We’ve closed this apprenticeship to new starts. This means you can’t enrol any new government funded learners. </p>
+{% endif %}
+
 <div class="course-info">
   <p>
     <b>LARS code</b>: {{ course.larsCode }}

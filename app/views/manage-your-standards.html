@@ -42,12 +42,14 @@ href: "/training-type"
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
       Manage your apprenticeships</h1>
 
-    <p>Add, manage or remove apprenticeships from your provider account. Any changes you make will update Find apprenticeship training.</p>
+    <p>Add, remove or change the courses you advertise on Find apprenticeship training. </p>
 
+    <p>If you want to claim government funding for a course, it must be added here. </p>
 
     <div class="action-container">
       <h2>Add an apprenticeship</h2>
-      <p>Add a new apprenticeship to your offering on Find apprenticeship training. </p>
+      <p>Add a new apprenticeship to your offering on Find apprenticeship training.</p>
+      <p>Courses must be added to your account before you can claim government funding for them. </p>
          {% from "govuk/components/button/macro.njk" import govukButton %}
 
     {{ govukButton({
@@ -196,6 +198,10 @@ key: {
               Delivery status
             </legend>
 
+            <div class="govuk-hint">
+            Delivery statuses are set by DfE. You cannot change them. 
+            </div>
+
             <div class="govuk-checkboxes govuk-checkboxes--small">
 
               <!--  Set up status options -->
@@ -204,22 +210,22 @@ key: {
   {
     label: "Open to new starts",
     count: openCount,
-    hint: "This course is currently active and taking new learners"
+    hint: "Courses you currently offer on Find apprenticeship training and claim government funding for"
   },
   {
     label: "Last start date added",
     count: lastStartCount,
-    hint: "Course will be wound down after this date"
-  },
-  {
-    label: "Not available yet",
-    count: notAvailableCount,
-    hint: "The course has been approved but cannot yet accept learners"
+    hint: "Courses you can enrol new government funded learners on, but until the last start date"
   },
   {
     label: "Closed to new starts",
     count: closedCount,
-    hint: "No new learners can join this course"
+    hint: "Courses you can’t enrol new learners on, advertise on Find apprenticeship training or claim funding for"
+  },
+    {
+    label: "Not available yet",
+    count: notAvailableCount,
+    hint: "Courses that aren’t available for delivery or enrolment, but can be advertised on Find apprenticeship training"
   }
 ] %}
 
@@ -242,7 +248,7 @@ key: {
 >
   {{ status.label }}
   <span class="govuk-hint govuk-!-display-inline">
-    ({{ status.count }})
+    <!-- ({{ status.count }}) -->
   </span>
 </label>
 
@@ -256,6 +262,8 @@ key: {
             </div>
           </fieldset>
         </div>
+
+        <p>Find out more about delivery statuses </p>
 
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
