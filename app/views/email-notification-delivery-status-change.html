@@ -1,0 +1,57 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Email notification {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+<!-- {{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }} -->
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-8">
+      The delivery status of one of your apprenticeships has changed  </h1>
+
+<p>You have a new delivery status for <b>Learning and skills mentor (level 4)</b></p>
+
+<p>Log into your training provider account to see what’s changed.</p>
+
+<p><a href="/manage-your-standards/" target="_blank">View new delivery status</a></p>
+
+<h2 class="govuk-!-margin-top-8">What do the different statuses mean?</h2>
+
+<h3>Not available yet</h3>
+<p>This means the course can be advertised on Find apprenticeship training, but you can’t enrol learners or claim government funding yet.</p>
+<p>When it becomes available, its status will change to open to new starts.</p>
+
+<h3>Open to new starts</h3>
+
+<p>This delivery status appears on courses you currently offer and advertise on Find apprenticeship training.</p>
+<p>You can claim government funding for them by submitting Individualised Learning Records (ILRs).</p>
+
+<h3>Last start date added</h3>
+<p>The Department for Education (DfE) will add a last date for new starts to courses that will not be available in the future.</p>
+<p>You can continue to enrol new government funded learners up until the last start date.</p>
+
+<h3>Closed to new starts</h3>
+<p>This means the last date for new starts set by DfE has now passed.</p>
+<p>If your course is closed to new starts, you will not be able to enrol new learners or claim government funding.</p>
+<p>You can continue to train learners who are already on the course. </p>
+
+<h2 class="govuk-!-margin-top-8">Find out more about delivery statuses</h2>
+<p><a href="/article-understanding-delivery-statuses/" target="_blank">Find out omre about delivery statuses</a></p>
+
+  </div>
+</div>
+
+
+
+{% endblock %}
