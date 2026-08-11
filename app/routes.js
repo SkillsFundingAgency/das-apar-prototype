@@ -55,6 +55,38 @@ router.post('/confirm-keep-course/:larsCode', function (req, res) {
 
 })
 
+//route users from course to delete course
+
+// Show the confirmation page
+router.get('/confirm-delete-course/:larsCode', function (req, res) {
+
+  const course = courses.find(
+    course => course.larsCode === req.params.larsCode
+  )
+
+  res.render('confirm-delete-course', {
+    course
+  })
+
+})
+
+// User confirms they want to delete the course
+router.post('/confirm-delete-course/:larsCode', function (req, res) {
+
+  const larsCode = req.params.larsCode
+
+  if (!req.session.data.deleteCourses) {
+    req.session.data.deleteCourses = []
+  }
+
+  if (!req.session.data.deleteCourses.includes(larsCode)) {
+    req.session.data.deleteCourses.push(larsCode)
+  }
+
+  res.redirect('/manage-your-standards/' + '?success=true')
+
+})
+
 // //Apprenticeship units
 
 // router.get('/apprenticeship-units/apprenticeship-unit-list', function (req, res) {
