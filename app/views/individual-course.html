@@ -20,6 +20,26 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+        {% if course.action == "Details needed" %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+  <div role="alert">
+    <h2 class="govuk-error-summary__title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <li>
+          <a href="#details-error">You must add a training option to this apprenticeship. </a>
+        </li>
+        <li>
+          <a href="#details-error">It will not show on Find apprenticeship training until you do.</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+    {% endif %}
+
     {% if data.success == "true" and course.larsCode in (data.keptCourses or []) %}
   {{ govukNotificationBanner({
     type: "success",
@@ -171,29 +191,6 @@ value: {
 
 {% endif %}
 
-{% if course.action == "Details needed" %}
-
-<div class="action-container govuk-!-margin-top-8 govuk-!-margin-bottom-7">
-  <h2>Action required</h2>
-  <p>This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. </p>
-  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-
-
-{% from "govuk/components/button/macro.njk" import govukButton %}
-
-<div class="govuk-button-group govuk-!-margin-bottom-0">
-
-{{ govukButton({
-  text: "Add missing details",
-  href: "#",
-  classes: 'govuk-!-margin-bottom-0'
-}) }}
-</div>
-
-</div>
-
-{% endif %}
-
 {% if course.status != "Closed to new starts" %}
 
     <h2>Contact details</h2>
@@ -257,88 +254,79 @@ value: {
   ]
 }) }}
 
-    <h2>Training options</h2>
+    <h2 class="govuk-!-margin-top-8">Training options</h2>
     <p>This is where you have told us you can deliver training for this apprenticeship.</p>
 
-         {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+     {% if course.action == "Details needed" %}
+     <div class="govuk-form-group govuk-form-group--error" id="details-error">
+         <dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <!-- <dt class="govuk-summary-list__key">
+      Name
+    </dt> -->
+    <dd class="govuk-summary-list__value">
+      <p id="national-insurance-number-error" class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> You must add a training option to this apprenticeship. 
+  </p>
+      No training locations. Select <b>Change</b> to add one.
+    </dd>
+    <dd class="govuk-summary-list__actions v-bottom">
+      <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
+    </dd>
+  </div>
+</dl>
+</div>
+     {% endif %}
 
-{{ govukSummaryList({
-  rows: [
-    {
-      key: {
-        text: "Delivery locations"
-      },
-      value: {
-        html: "At your training venue<br/>At employer’s location"
-      },
-      actions: {
-        items: [
-          {
-            href: "#",
-            text: "Change",
-            visuallyHiddenText: "name"
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Your training venues"
-      },
-      value: {
-        text: "Practical Genius"
-      },
-      actions: {
-        items: [
-          {
-            href: "#",
-            text: "Change",
-            visuallyHiddenText: "name"
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "National provider"
-      },
-      value: {
-        text: "No"
-      },
-      actions: {
-        items: [
-          {
-            href: "#",
-            text: "Change",
-            visuallyHiddenText: "name"
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Areas you can deliver at an employer’s location"
-      },
-      value: {
-        html: "Bedford<br/>Norfork<br/>Lincolnshire"
-      },
-      actions: {
-        items: [
-          {
-            href: "#",
-            text: "Change",
-            visuallyHiddenText: "name"
-          }
-        ]
-      }
-    }
-  ]
-}) }}
+     {% if course.action != "Details needed" %}
+
+    <dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <!-- <dt class="govuk-summary-list__key">
+      Name
+    </dt> -->
+    <dd class="govuk-summary-list__value">
+      This apprenticeship is only delivered at your training locations.
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
+    </dd>
+  </div>
+</dl>
+
+    <dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Venue name
+    </dt>
+    <dd class="govuk-summary-list__key">
+      Delivery method
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <!-- <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a> -->
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__value">
+      Dalton house
+    </dt>
+    <dd class="govuk-summary-list__value">
+      Block release
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
+    </dd>
+  </div>
+</dl>
 
 {% endif %}
 
 
-    <h2>Delete this course</h2>
+
+{% endif %}
+
+
+    <h2 class="govuk-!-margin-top-8">Delete this course</h2>
     <p>Deleting a course from your offering will stop you from claiming government funding for it. You will not be able to submit any Individualised Learner Records (ILRs) for it. </p>
     <p>If you choose to delete it, it will be removed from your account and no longer show on Find apprenticeship training. </p>
 
