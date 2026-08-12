@@ -65,7 +65,7 @@
 {% elif course.status == "Closed to new starts" %}
   {% set tagClass = "govuk-tag--light-grey" %}
 {% elif course.status == "Not available yet" %}
-  {% set tagClass = "govuk-tag--light-yellow" %}
+  {% set tagClass = "govuk-tag--yellow" %}
 {% endif %}
 
 <!-- Summary component -->
@@ -150,6 +150,15 @@ value: {
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: " This course has a last start date set. Once the last start date has passed, you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
+  iconFallbackText: "Warning"
+}) }}
+
+{% endif %}
+
+{% if course.status == "Not available yet" %}
+  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{{ govukWarningText({
+  html: "This course is not available for delivery right now, but you can add it and complete your set-up. You’ll be able to deliver it once it’s available.",
   iconFallbackText: "Warning"
 }) }}
 
