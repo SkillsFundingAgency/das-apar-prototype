@@ -16,11 +16,26 @@ href: "/training-type"
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-padding-0">
 
-        {% if data.success == "true" and course.larsCode in (data.deleteCourses or []) %}
-  {{ govukNotificationBanner({
-    type: "success",
-    text: "This course has been deleted."
-  }) }}
+    {% if deletedCourse %}
+{{ govukNotificationBanner({
+type: "success",
+titleText: "Success",
+html: "<p class='govuk-notification-banner__heading'>"
++ deletedCourse.title
++ " has been deleted.</p>"
+}) }}
+{% endif %}
+
+{% if deletedLarsCode %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% call govukNotificationBanner({
+  type: "success"
+}) %}
+  <h3 class="govuk-notification-banner__heading">
+    This course has been deleted
+  </h3>
+  {% endcall %}
 {% endif %}
 
 

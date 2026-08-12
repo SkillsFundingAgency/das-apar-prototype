@@ -56,8 +56,6 @@ router.post('/confirm-keep-course/:larsCode', function (req, res) {
 })
 
 //route users from course to delete course
-
-// Show the confirmation page
 router.get('/confirm-delete-course/:larsCode', function (req, res) {
 
   const course = courses.find(
@@ -83,8 +81,9 @@ router.post('/confirm-delete-course/:larsCode', function (req, res) {
     req.session.data.deleteCourses.push(larsCode)
   }
 
-  res.redirect('/manage-your-standards/' + '?success=true')
+  req.session.data.courseDeleted = larsCode
 
+  res.redirect('/manage-your-standards')
 })
 
 // //Apprenticeship units
@@ -104,19 +103,23 @@ router.post('/confirm-delete-course/:larsCode', function (req, res) {
 // })
 
 
-// // show courses in manage your standards
+// show courses in manage your standards
 const defaultCourses = require('./data/courses')
 
 // Show course list (alphabetical, combined)
 router.get('/manage-your-standards', function (req, res) {
 
   const addedCourses = req.session.data.addedCourses || []
+  const deletedCourses = req.session.data.deleteCourses || []
 
   // Combine default + added
   const allCourses = [...defaultCourses, ...addedCourses]
 
-  // Exclude Units
-  const filteredCourses = allCourses.filter(course => course.type !== 'Unit')
+  // Exclude Units and deleted courses
+  const filteredCourses = allCourses.filter(course =>
+    course.type !== 'Unit' &&
+    !deletedCourses.includes(course.larsCode)
+  )
 
   // Sort alphabetically
   filteredCourses.sort((a, b) => {
@@ -124,10 +127,13 @@ router.get('/manage-your-standards', function (req, res) {
   })
 
   res.render('manage-your-standards', {
-    courses: filteredCourses
+    courses: filteredCourses,
+    deletedLarsCode: req.session.data.courseDeleted
   })
-})
 
+  // Clear success message after displaying it once
+  delete req.session.data.courseDeleted
+})
 
 // // show units in manage your apprenticeship units
 router.get('/manage-your-apprenticeship-units', function(req, res) {

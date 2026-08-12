@@ -4,7 +4,7 @@ module.exports = [
   { title: "Business administrator (level 3)", larsCode: "196", status: "Open to new starts", sector: "Business and administration", action: "Details needed", type: "Apprenticeship" },
   { title: "Digital support technician (level 3)", larsCode: "439", status: "Open to new starts", sector: "Digital", type: "Apprenticeship" },
   { title: "Teaching assistant (level 3)", larsCode: "60", status: "Open to new starts", sector: "Education and early years", type: "Apprenticeship" },
-    { title: "Data analyst (level 4)", larsCode: "138", status: "Open to new starts", removalDate: "31 Dec 2027", action: "Marked for removal", sector: "Digital", type: "Apprenticeship" },
+    { title: "Data analyst (level 4)", larsCode: "138", status: "Open to new starts", removalDate: "31 Dec 2027", sector: "Digital", type: "Apprenticeship" },
     { title: "Accounts or finance assistant (level 2)", larsCode: "488", status: "Open to new starts", sector: "Legal, finance and accounting", type: "Apprenticeship" },
     { title: "Network engineer (level 4)", larsCode: "121", status: "Open to new starts", type: "Apprenticeship" },
      { title: "Youth support worker (level 3)", larsCode: "928", status: "Open to new starts", type: "Apprenticeship" },
