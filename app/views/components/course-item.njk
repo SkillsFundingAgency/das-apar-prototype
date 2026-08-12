@@ -37,6 +37,10 @@
 <p>We’ve closed this apprenticeship to new starts. This means you can’t enrol any new government funded learners. </p>
 {% endif %}
 
+{% if course.status == "Not available yet" %}
+<p>This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
+{% endif %}
+
 <div class="course-info">
   <p>
     <b>LARS code</b>: {{ course.larsCode }}
