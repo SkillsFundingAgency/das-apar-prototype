@@ -26,13 +26,107 @@
       <p>Deleting an apprenticeship will remove it from your account. This means it will no longer show on Find apprenticeship training. </p>
       <p>Deleting it will also stop you from submitting Individualised Learning Records (ILR) for government funding.</p>
       
-      <div class="action-container govuk-!-margin-bottom-6">
-        <h2 class="govuk-!-margin-bottom-2">{{ course.title }}</h2>
-        <p class="govuk-!-margin-bottom-1">Lars code: {{ course.larsCode }}</p>
+
+      {% set tagClass = "" %}
+
+{% if course.status == "Open to new starts" %}
+  {% set tagClass = "govuk-tag--green" %}
+{% elif course.status == "Last start date added" %}
+  {% set tagClass = "govuk-tag--orange" %}
+{% elif course.status == "Closed to new starts" %}
+  {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
+  {% elif course.status == "Not available yet" %}
+  {% set tagClass = "govuk-tag govuk-tag--yellow" %}
+{% endif %}
+
+      <!-- Summary component -->
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set rows = [
+     {
+    key: {
+      text: "Apprenticeship"
+    },
+    value: {
+      text: course.title
+    }
+  },
+   {
+    key: {
+      text: "ST Code"
+    },
+    value: {
+      text: "105256"
+    }
+  },
+  {
+    key: {
+      text: "Type"
+    },
+    value: {
+      text: course.type
+    }
+  },
+  {
+    key: {
+      text: "Sector"
+    },
+    value: {
+      text: course.sector
+    }
+  },
+  {
+    key: {
+      text: "LARS code"
+    },
+    value: {
+      text: course.larsCode
+    }
+  },
+  {
+    key: {
+      text: "Delivery status"
+    },
+    
+value: {
+        html: govukTag({
+          text: course.status,
+          classes: tagClass
+        })
+      }
+
+  }
+] %}
+
+{% if course.status == "Last start date added" %}
+  {% set rows = (rows.push({
+    key: {
+      text: "Last start date"
+    },
+    value: {
+      text: course.laststartDate
+    }
+  }), rows) %}
+{% endif %}
+
+{% if course.status == "Closed to new starts" %}
+  {% set rows = (rows.push({
+    key: {
+      text: "Last start date"
+    },
+    value: {
+      text: course.laststartDate
+    }
+  }), rows) %}
+{% endif %}
+
+{{ govukSummaryList({
+  rows: rows
+}) }}
 
         {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-      
-      </div>
+    
 
       {{ govukWarningText({
   text: "Do not delete this course if you currently have active learners on it. It needs to stay in your offering to claim government funding. ",
