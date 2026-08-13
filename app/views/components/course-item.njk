@@ -34,11 +34,19 @@
   </div>
 
 {% if course.status == "Closed to new starts" %}
-<p>We’ve closed this apprenticeship to new starts. This means you can’t enrol any new government funded learners. </p>
+<p>We’ve closed this apprenticeship to new starts. This means you can no longer enrol any new government funded learners. </p>
 {% endif %}
 
 {% if course.status == "Not available yet" %}
 <p>This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
+{% endif %}
+
+{% if course.status == "Last start date added" %}
+<p>We've added a last start date for learners to this course. You can enrol learners and claim government funding up until this date.</p>
+{% endif %}
+
+{% if course.status == "Open to new starts" %}
+<p>This course is open to new starts. You can enrol new learners, claim government funding and advertise it on Find apprenticeship training.</p>
 {% endif %}
 
 <div class="course-info">
