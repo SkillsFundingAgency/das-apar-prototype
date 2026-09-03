@@ -9,6 +9,6 @@
     "accessible-autocomplete": "^3.0.1",
     "dfe-frontend": "^2.0.1",
     "govuk-frontend": "6.2.0",
-    "govuk-prototype-kit": "13.20.1"
+    "govuk-prototype-kit": "13.20.4"
   }
 }
