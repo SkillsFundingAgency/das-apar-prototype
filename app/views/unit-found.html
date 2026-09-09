@@ -1,3 +1,5 @@
+<!-- Part of the request an apprenticeship journey, the user has searched for a unit and landed on this page to confirm it's the correct one -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -20,6 +22,7 @@
        Request an apprenticeship unit
       </span>
 
+      <!-- For the sake of time, the Solar PV unit title was hard coded in, but this page could be made dynamic -->
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
       Solar PV installation and maintenance – Apprenticeship unit (level 3)</h1>
       
@@ -60,6 +63,7 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+<!-- Once the user clicks the primary button, they are sent to a confirmation page -->
 <div class="govuk-button-group">
 
   {{ govukButton({

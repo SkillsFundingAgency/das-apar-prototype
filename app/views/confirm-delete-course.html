@@ -1,3 +1,5 @@
+<!-- Part of delete course journey - essentially an 'are you sure?' page before user confirms deletion -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -39,7 +41,7 @@
   {% set tagClass = "govuk-tag govuk-tag--yellow" %}
 {% endif %}
 
-      <!-- Summary component -->
+      <!-- Summary component showing course details found in courses.js -->
 
       {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 

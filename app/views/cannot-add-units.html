@@ -1,3 +1,5 @@
+<!-- In our testing scenario, this provider does not have permission to add any more apprenticeship units. So upon clicking to add an apprenticeship unit, they are taken here. -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -16,10 +18,6 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
- <!-- <span class="govuk-caption-xl">
-       Marked for removal
-      </span> -->
-
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
       You cannot add apprenticeship units right now</h1>
 
@@ -32,6 +30,8 @@
 
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+
+<!-- Button takes user to request an apprenticeship unit journey -->
 
 <div class="govuk-button-group">
 

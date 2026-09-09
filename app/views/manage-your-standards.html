@@ -1,3 +1,5 @@
+<!-- This is the page to manage Apprenticeships (also known as standards). Providers can see their current apprenticeship offering, the delivery statuses associated with each and any that require action -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -15,6 +17,8 @@ href: "/training-type"
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-padding-0">
+
+    <!-- Success banner notification for deleting a course -->
 
     {% if deletedCourse %}
 {{ govukNotificationBanner({
@@ -39,6 +43,7 @@ html: "<p class='govuk-notification-banner__heading'>"
 {% endif %}
 
 
+    <!-- Success banner notification for adding a course -->
 
     {% if showBanner and data['courses'] %}
 
@@ -68,6 +73,8 @@ html: "<p class='govuk-notification-banner__heading'>"
 
     <p>If you want to claim government funding for a course, it must be added here. </p>
 
+        <!-- Add an apprenticeship action -->
+
     <div class="action-container">
       <h2>Add an apprenticeship</h2>
       <p>Add a new apprenticeship to your offering on Find apprenticeship training.</p>
@@ -79,6 +86,8 @@ html: "<p class='govuk-notification-banner__heading'>"
     href: '/add-new-standard'
     }) }}
     </div>
+
+        <!-- Action required container -->
 
     {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -93,10 +102,15 @@ html: "<p class='govuk-notification-banner__heading'>"
 
     {% set actionText = "" %}
 
+    <!-- Course is marked for removal - manage what statuses courses have in courses.js file -->
+
     {% if course.action == "Marked for removal" %}
       {% set actionText = "Confirm or remove" %}
       {% set descText = "This apprenticeship will be removed on 31 Dec 2027 because you have not delivered it recently. Confirm if you still want to offer it." %}
-    {% elif course.action == "Details needed" %}
+    
+          <!-- Course has missing information -->
+
+      {% elif course.action == "Details needed" %}
       {% set actionText = "Add details" %}
       {% set descText = "This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. " %}
     {% endif %}
@@ -137,22 +151,17 @@ key: {
   </div>
 {% endif %}
 
-
-
-
-
   </div>
 </div>
-
 
     <hr class="govuk-section-break--xl govuk-section-break--visible">
   
 
-
-
 <div class="govuk-grid-row govuk-!-margin-top-4">
   <h2>Your apprenticeships</h2>
   <p>This is a list of your current apprenticeships.</p>
+
+      <!-- List of courses with filters -->
 
 <div class="govuk-grid-row">
 
@@ -270,6 +279,7 @@ key: {
 >
   {{ status.label }}
   <span class="govuk-hint govuk-!-display-inline">
+        <!-- Status count has been removed and will be future consideration -->
     <!-- ({{ status.count }}) -->
   </span>
 </label>
@@ -285,6 +295,8 @@ key: {
           </fieldset>
         </div>
 
+            <!-- Link to help article -->
+      
         <p><a href="article-understanding-delivery-statuses" target="_blank">Find out more about delivery statuses</a></p>
 
 
@@ -367,7 +379,7 @@ key: {
 
 {% set paginatedResults = results.slice(start, end) %}
 
-    <!-- Results list -->
+    <!-- Results list - appearance of course list items are managed in course-item.njk -->
 
 {% for course in paginatedResults %}
   {% include "components/course-item.njk" %}
@@ -376,6 +388,8 @@ key: {
     {% if results.length == 0 %}
       <p class="govuk-body">No courses match your filters.</p>
     {% endif %}
+
+        <!-- Pagination -->
 
 {% if totalPages > 1 %}
 <nav class="govuk-pagination govuk-!-margin-top-6" aria-label="Pagination">

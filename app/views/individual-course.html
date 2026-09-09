@@ -1,3 +1,5 @@
+    <!-- Course template that handles apprenticeships and apprenticeship units -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -20,6 +22,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+        <!-- Error summary if course is missing information -->
+
         {% if course.action == "Details needed" %}
     <div class="govuk-error-summary" data-module="govuk-error-summary">
   <div role="alert">
@@ -39,6 +43,8 @@
   </div>
 </div>
     {% endif %}
+
+        <!-- Success banner notification for when a user chooses to keep an apprenticeship that was marked for removal -->
 
     {% if data.success == "true" and course.larsCode in (data.keptCourses or []) %}
   {{ govukNotificationBanner({
@@ -68,7 +74,7 @@
   {% set tagClass = "govuk-tag--yellow" %}
 {% endif %}
 
-<!-- Summary component -->
+<!-- Summary component showing course details -->
 
       {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -146,14 +152,18 @@ value: {
   rows: rows
 }) }}
 
+    <!-- Last start date status explainer text -->
+
 {% if course.status == "Last start date added" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
-  html: " This course has a last start date set. Once the last start date has passed, you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
+  html: "This course has a last start date set. Once the last start date has passed, you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
   iconFallbackText: "Warning"
 }) }}
 
 {% endif %}
+
+<!-- Not available yet status explainer text -->
 
 {% if course.status == "Not available yet" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
@@ -164,6 +174,8 @@ value: {
 
 {% endif %}
 
+<!-- Closed to new starts status explainer text -->
+
 {% if course.status == "Closed to new starts" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
@@ -173,6 +185,7 @@ value: {
 
 {% endif %}
 
+<!-- Marked for removal status explainer text + actions, within coloured container -->
 
 {% if course.action == "Marked for removal"
    and course.larsCode not in (data.keptCourses or []) %}
@@ -187,6 +200,8 @@ value: {
 
 <div class="govuk-button-group govuk-!-margin-bottom-0">
 
+<!-- Marked for removal - users can choose to keep the course, or remove. Keeping the course continues the flow we are testing in this prototype -->
+
 {{ govukButton({
   text: "Keep this course",
   href: "/confirm-keep-course/" + course.larsCode
@@ -200,7 +215,11 @@ value: {
 
 {% endif %}
 
+<!-- Only show the contact details and training options sections for courses that are not already closed -->
 {% if course.status != "Closed to new starts" %}
+
+
+<!-- Contact details section -->
 
     <h2>Contact details</h2>
     <p>If there is a specific person of team that should be contacted for this apprenticeship, update these contact details.</p>
@@ -263,9 +282,12 @@ value: {
   ]
 }) }}
 
+<!-- Training options section -->
+
     <h2 class="govuk-!-margin-top-8">Training options</h2>
     <p>This is where you have told us you can deliver training for this apprenticeship.</p>
 
+    <!-- Missing details status error section - indicates to users what info is missing and where in the page the error is. In this instance it's a lack of training options. -->
      {% if course.action == "Details needed" %}
      <div class="govuk-form-group govuk-form-group--error" id="details-error">
          <dl class="govuk-summary-list">
@@ -286,6 +308,8 @@ value: {
 </dl>
 </div>
      {% endif %}
+
+     <!-- Show training options below if course does NOT have details needed status -->
 
      {% if course.action != "Details needed" %}
 
@@ -334,6 +358,7 @@ value: {
 
 {% endif %}
 
+<!-- Delete course section explainer -->
 
     <h2 class="govuk-!-margin-top-8">Delete this course</h2>
     <p>Deleting a course from your offering will stop you from claiming government funding for it. You will not be able to submit any Individualised Learner Records (ILRs) for it. </p>
@@ -349,6 +374,8 @@ value: {
  <p><b>Do not delete this course if you have learners still completing it. It must stay in your offering to claim government funding.</b></p>
 </div>
 
+<!-- Delete course button takes user to 'confirm delete course' page -->
+
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {{ govukButton({
@@ -360,6 +387,8 @@ value: {
 
 
     <hr class="govuk-section-break--xl govuk-section-break--visible">
+
+    <!-- Link back to results page for apprenticeships -->
 
     <a class="govuk-link" href="/manage-your-standards">Back to manage your standards</a>
 

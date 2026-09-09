@@ -1,3 +1,5 @@
+<!-- List of apprenticeship units, the content is managed in courses.js with a 'type' property of 'unit' -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -23,6 +25,7 @@ href: "/training-type"
 
     <p>Add, manage or remove apprenticeship units from your provider account. Any changes you make will update Find apprenticeship training.</p>
 
+<!-- Add new apprenticeship unit primary action -->
 
     <div class="action-container">
       <h2>Add an apprenticeship unit</h2>
@@ -34,6 +37,8 @@ href: "/training-type"
     href: '/cannot-add-units'
     }) }}
     </div>
+
+    <!-- Action required table will appear if any units have the status of 'marked for removal' or 'details needed' -->
 
     {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -109,6 +114,7 @@ key: {
   <h2>Your apprenticeship units</h2>
   <p>This is a list of your current apprenticeship units.</p>
 
+  <!-- List of apprenticeship unit courses -->
 <div class="govuk-grid-row">
 
   <!-- LEFT: FILTERS -->

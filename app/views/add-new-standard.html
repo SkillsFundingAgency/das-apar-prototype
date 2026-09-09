@@ -1,3 +1,5 @@
+    <!-- Add new apprenticeship (also known as standard) with autocomplete search -->
+
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -30,10 +32,11 @@
     Start typing the apprenticeship name or code
   </label>
 
+      <!-- Autocomplete search - searchable options are listed in application.js -->
   <div id="autocomplete-container"></div>
 
   <input type="hidden" name="course" id="selected-course">
-
+    <!-- Form goes to 'course found' page -->
   <button class="govuk-button govuk-!-margin-top-7">Continue</button>
 </form>
 

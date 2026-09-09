@@ -1,3 +1,4 @@
+    <!-- Part of add an apprenticship journey - course found and asking user to confirm it is the right course. This is the end of the flow for this prototype. -->
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -23,7 +24,7 @@
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
       User researcher (level 4)</h1>
 
-<!-- Summary component -->
+<!-- Summary component showing course details -->
 
       {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -76,6 +77,8 @@ value: {
   html: "This course is not yet available for delivery. You can add this now and complete your setup. You’ll be able to deliver it once it becomes available.",
   iconFallbackText: "Warning"
 }) }}
+
+    <!-- Asking users if this is the right apprenticeship with yes/no option -->
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
