@@ -2,13 +2,13 @@
 
 {% set tagClass = "" %}
 
-{% if course.status == "Open to new starts" %}
+{% if course.status == "Open for funding" %}
   {% set tagClass = "govuk-tag--green" %}
-{% elif course.status == "Last start date added" %}
+{% elif course.status == "Funding closing for new starts" %}
   {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Closed to new starts" %}
+{% elif course.status == "Funding closed for new starts" %}
   {% set tagClass = "govuk-tag govuk-tag--light-grey" %}
-  {% elif course.status == "Not available yet" %}
+  {% elif course.status == "Funding not available yet" %}
   {% set tagClass = "govuk-tag govuk-tag--yellow" %}
 {% endif %}
 
@@ -33,16 +33,16 @@
 
   </div>
 
-{% if course.status == "Closed to new starts" %}
-<p class="govuk-!-margin-top-3">We’ve closed this apprenticeship to new starts. This means you can no longer enrol any new government funded learners. </p>
+{% if course.status == "Funding closed for new starts" %}
+<p class="govuk-!-margin-top-3"><b>Funding status:</b> We’ve closed this apprenticeship to new starts. This means you can no longer claim funding for any learners you enrol. </p>
 {% endif %}
 
-{% if course.status == "Not available yet" %}
-<p class="govuk-!-margin-top-3">This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
+{% if course.status == "Funding not available yet" %}
+<p class="govuk-!-margin-top-3"><b>Funding status:</b> This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
 {% endif %}
 
-{% if course.status == "Last start date added" %}
-<p class="govuk-!-margin-top-3">We’ve added a last start date for learners to this course. You can enrol new government funded learners up until this date. </p>
+{% if course.status == "Funding closing for new starts" %}
+<p class="govuk-!-margin-top-3"><b>Funding status:</b> We’ve added a last start date for learners to this course. You can claim funding for learners you enrol up until this date. </p>
 {% endif %}
 
 
@@ -52,14 +52,14 @@
   </p>
 
 
-{% if course.status == "Last start date added" and course.laststartDate %}
+{% if course.status == "Funding closing for new starts" and course.laststartDate %}
   <p>
     <b>Last start date</b>: {{ course.laststartDate }}
   </p>
   
 {% endif %}
 
-{% if course.status == "Closed to new starts" and course.laststartDate %}
+{% if course.status == "Funding closed for new starts" and course.laststartDate %}
   <p>
     <b>Last start date</b>: {{ course.laststartDate }}
   </p>

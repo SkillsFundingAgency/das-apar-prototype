@@ -7,9 +7,19 @@ Manage your apprenticeships
 {% endblock %}
 
 {% block containerStart %}
-{{ govukBackLink({
-text: "Back",
-href: "/training-type"
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Dashboard",
+      href: "index.html"
+    },
+    {
+      text: "Manage your apprenticeships and apprenticeship units",
+      href: "manage-training-and-venues.html"
+    }
+  ]
 }) }}
 {% endblock %}
 
@@ -77,8 +87,7 @@ html: "<p class='govuk-notification-banner__heading'>"
 
     <div class="action-container">
       <h2>Add an apprenticeship</h2>
-      <p>Add a new apprenticeship to your offering on Find apprenticeship training.</p>
-      <p>Courses must be added to your account before you can claim government funding for them. </p>
+      <p>Add a new apprenticeship to your offering on Find apprenticeship training. Courses must be added to your account before you can claim government funding for them. </p>
          {% from "govuk/components/button/macro.njk" import govukButton %}
 
     {{ govukButton({
@@ -96,17 +105,17 @@ html: "<p class='govuk-notification-banner__heading'>"
 {% for course in courses %}
 
   {% if (
-    course.action == "Marked for removal"
+    course.action == "Marked as inactive"
     and course.larsCode not in (data.keptCourses or [])
   ) or course.action == "Details needed" %}
 
     {% set actionText = "" %}
 
-    <!-- Course is marked for removal - manage what statuses courses have in courses.js file -->
+    <!-- Course is marked as inactive - manage what statuses courses have in courses.js file -->
 
-    {% if course.action == "Marked for removal" %}
+    {% if course.action == "Marked as inactive" %}
       {% set actionText = "Confirm or remove" %}
-      {% set descText = "This apprenticeship will be removed on 31 Dec 2027 because you have not delivered it recently. Confirm if you still want to offer it." %}
+      {% set descText = "This course is currently inactive and isn’t being shown on Find apprenticeship training. You can start advertising it again at any time." %}
     
           <!-- Course has missing information -->
 
@@ -142,8 +151,8 @@ key: {
 {% if actionRows.length %}
 
      <div class="action-container govuk-!-margin-top-7">
-      <h2>Action required</h2>
-      <p>These apprenticeships need your attention.</p>
+      <h2>Courses not showing on Find apprenticeship training</h2>
+      <p>If you want to advertise these courses to employers, you need to update them.</p>
 
   {{ govukSummaryList({
     rows: actionRows
@@ -160,6 +169,23 @@ key: {
 <div class="govuk-grid-row govuk-!-margin-top-4">
   <h2>Your apprenticeships</h2>
   <p>This is a list of your current apprenticeships.</p>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      What do the funding statuses mean?
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <p>The Apprenticeship Service (AS) is responsible for managing the courses training providers can deliver and claim funding for. </p>
+    <p>Sometimes, we may choose to limit who can deliver a course. We also may decide to stop all providers from offering it. For example, when a course is being defunded. </p>
+    <p>You can use the funding statuses to understand if a course is:</p>
+<ul>
+  <li>closing to new government funded learners soon</li>
+  <li>no longer funded by the government </li>
+</ul>
+  </div>
+</details>
 
       <!-- List of courses with filters -->
 
@@ -206,16 +232,16 @@ key: {
 {% set closedCount = 0 %}
 
 {% for course in courses %}
-  {% if course.status == "Open to new starts" %}
+  {% if course.status == "Open for funding" %}
     {% set openCount = openCount + 1 %}
 
-  {% elif course.status == "Last start date added" %}
+  {% elif course.status == "Funding closing for new starts" %}
     {% set lastStartCount = lastStartCount + 1 %}
 
-  {% elif course.status == "Not available yet" %}
+  {% elif course.status == "Funding not available yet" %}
     {% set notAvailableCount = notAvailableCount + 1 %}
 
-  {% elif course.status == "Closed to new starts" %}
+  {% elif course.status == "Funding closed for new starts" %}
     {% set closedCount = closedCount + 1 %}
   {% endif %}
 {% endfor %}
@@ -226,11 +252,11 @@ key: {
           <fieldset class="govuk-fieldset">
 
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              Delivery status
+              Funding status
             </legend>
 
             <div class="govuk-hint">
-            Delivery statuses are set by the Apprenticeship Service. You cannot change them. 
+            Funding statuses are set by the Apprenticeship Service. You cannot change them. 
             </div>
 
             <div class="govuk-checkboxes govuk-checkboxes--small">
@@ -239,22 +265,22 @@ key: {
 
 {% set statusOptions = [
   {
-    label: "Open to new starts",
+    label: "Open for funding",
     count: openCount,
     hint: "Courses you currently offer on Find apprenticeship training and claim government funding for"
   },
   {
-    label: "Last start date added",
+    label: "Funding closing for new starts",
     count: lastStartCount,
     hint: "Courses you can enrol new government funded learners on, but until the last start date"
   },
   {
-    label: "Closed to new starts",
+    label: "Funding closed for new starts",
     count: closedCount,
     hint: "Courses you can’t enrol new learners on, advertise on Find apprenticeship training or claim funding for"
   },
     {
-    label: "Not available yet",
+    label: "Funding not available yet",
     count: notAvailableCount,
     hint: "Courses that aren’t available for delivery or enrolment, but can be advertised on Find apprenticeship training"
   }
@@ -297,7 +323,7 @@ key: {
 
             <!-- Link to help article -->
       
-        <p><a href="article-understanding-delivery-statuses" target="_blank">Find out more about delivery statuses</a></p>
+        <p><a href="article-understanding-delivery-statuses" target="_blank">Find out more about funding statuses (opens in new tab)</a></p>
 
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">

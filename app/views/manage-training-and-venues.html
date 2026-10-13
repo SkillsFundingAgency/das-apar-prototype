@@ -7,10 +7,16 @@
 {% endblock %}
 
 {% block containerStart %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Dashboard",
+      href: "index.html"
+    }
+  ]
+}) }}
 {% endblock %}
 
 {% block content %}
