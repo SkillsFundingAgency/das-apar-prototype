@@ -96,69 +96,184 @@ html: "<p class='govuk-notification-banner__heading'>"
     }) }}
     </div>
 
-        <!-- Action required container -->
+        <!-- Courses not showing in FAT container -->
 
-    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+ {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
 
-{% set actionRows = [] %}
+{% set accordionThreshold = 3 %}
+
+<!-- Build course arrays -->
+
+{% set detailsNeededCourses = [] %}
+{% set inactiveCourses = [] %}
 
 {% for course in courses %}
 
-  {% if (
-    course.action == "Marked as inactive"
-    and course.larsCode not in (data.keptCourses or [])
-  ) or course.action == "Details needed" %}
+  {% if course.action == "Details needed" %}
+    {% set detailsNeededCourses = (
+      detailsNeededCourses.push(course),
+      detailsNeededCourses
+    ) %}
+  {% endif %}
 
-    {% set actionText = "" %}
-
-    <!-- Course is marked as inactive - manage what statuses courses have in courses.js file with the attribute 'action' -->
-
-    {% if course.action == "Marked as inactive" %}
-      {% set actionText = "Confirm or remove" %}
-      {% set descText = "This course is currently inactive and isn’t being shown on Find apprenticeship training. You can start advertising it again at any time." %}
-    
-          <!-- Course has missing information -->
-
-      {% elif course.action == "Details needed" %}
-      {% set actionText = "Add details" %}
-      {% set descText = "This apprenticeship is missing information, which means it’s not showing on Find apprenticeship training. Update your details to advertise it. " %}
-    {% endif %}
-
-    {% set actionRows = (actionRows.push({
-      
-key: {
-  html: "
-    <strong>" + course.title + "</strong>
-    <div class='govuk-hint govuk-!-margin-top-1'>
-      " + descText + "
-    </div>
-  "
-},
-      actions: {
-        items: [
-          {
-            href: "/individual-course/" + course.larsCode,
-            text: actionText
-          }
-        ]
-      }
-    }), actionRows) %}
-
+  {% if course.action == "Marked as inactive"
+    and course.larsCode not in (data.keptCourses or []) %}
+    {% set inactiveCourses = (
+      inactiveCourses.push(course),
+      inactiveCourses
+    ) %}
   {% endif %}
 
 {% endfor %}
 
-{% if actionRows.length %}
 
-     <div class="action-container govuk-!-margin-top-7">
-      <h2>Courses not showing on Find apprenticeship training</h2>
-      <p>If you want to advertise these courses to employers, you need to update them.</p>
+<!-- Only show section if there are any courses -->
 
-  {{ govukSummaryList({
-    rows: actionRows
-  }) }}
-  </div>
+{% if detailsNeededCourses.length or inactiveCourses.length %}
+
+<div class="action-container govuk-!-margin-top-7">
+
+  <h2 class="govuk-heading-m">
+    Courses not showing on Find apprenticeship training
+  </h2>
+
+  <p class="govuk-body">
+    If you want to advertise these courses to employers, you need to update them.
+  </p>
+
+  <!-- ----------------------------------------
+  SIMPLE LISTS (1-3 COURSES)            
+  ---------------------------------------- -->
+
+  {% if detailsNeededCourses.length > 0
+    and detailsNeededCourses.length <= accordionThreshold %}
+
+    <h3 class="govuk-heading-s">
+      Courses with missing information
+    </h3>
+
+    <ul class="govuk-list">
+      {% for course in detailsNeededCourses %}
+        <li>
+          <a
+            class="govuk-link"
+            href="/individual-course/{{ course.larsCode }}">
+            {{ course.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+  {% endif %}
+
+
+  {% if inactiveCourses.length > 0
+    and inactiveCourses.length <= accordionThreshold %}
+
+    <h3 class="govuk-heading-s">
+      Courses you haven't delivered in a long time
+    </h3>
+
+    <ul class="govuk-list">
+      {% for course in inactiveCourses %}
+        <li>
+          <a
+            class="govuk-link"
+            href="/individual-course/{{ course.larsCode }}">
+            {{ course.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+  {% endif %}
+
+
+  <!-- ----------------------------------------
+  ACCORDION SECTIONS (4+ COURSES)        
+  --------------------------------------- -->
+
+  {% set accordionItems = [] %}
+
+  {% if detailsNeededCourses.length > accordionThreshold %}
+
+    {% set detailsNeededHtml %}
+      <ul class="govuk-list">
+        {% for course in detailsNeededCourses %}
+          <li>
+            <a
+              class="govuk-link"
+              href="/individual-course/{{ course.larsCode }}">
+              {{ course.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endset %}
+
+    {% set accordionItems = (
+      accordionItems.push({
+        heading: {
+          text: "Courses with missing information (" + detailsNeededCourses.length + ")"
+        },
+        content: {
+          html: detailsNeededHtml
+        }
+      }),
+      accordionItems
+    ) %}
+
+  {% endif %}
+
+
+  {% if inactiveCourses.length > accordionThreshold %}
+
+    {% set inactiveCoursesHtml %}
+      <ul class="govuk-list">
+        {% for course in inactiveCourses %}
+          <li>
+            <a
+              class="govuk-link"
+              href="/individual-course/{{ course.larsCode }}">
+              {{ course.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endset %}
+
+    {% set accordionItems = (
+      accordionItems.push({
+        heading: {
+          text: "Courses you haven't delivered in a long time (" + inactiveCourses.length + ")"
+        },
+        content: {
+          html: inactiveCoursesHtml
+        }
+      }),
+      accordionItems
+    ) %}
+
+  {% endif %}
+
+
+  {% if accordionItems.length %}
+
+    {{ govukAccordion({
+      id: "courses-accordion",
+      items: accordionItems
+    }) }}
+
+  {% endif %}
+
+</div>
+
 {% endif %}
+
+
+
+
+
 
   </div>
 </div>
