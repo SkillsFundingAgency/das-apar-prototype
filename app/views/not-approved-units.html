@@ -1,0 +1,49 @@
+<!-- In our testing scenario, this provider has not been approved to offer apprenticeship units. So upon clicking the apprenticeship units tile on 'manage-training-and-venues', they are taken here. -->
+
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Cannot add apprenticeship units
+{% endblock %}
+
+{% block containerStart %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Home",
+      href: "index.html"
+    },
+    {
+      text: "Manage your training courses",
+      href: "manage-training-and-venues.html"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      You have not been approved to deliver apprenticeship units</h1>
+
+      <p class="govuk-body-l">The delivery of apprenticeship units is managed by the Apprentice Service. This means only certain providers can offer them. </p>
+
+<p class="govuk-body-m">We invited select providers to offer apprenticeship units in 2026. If you were not eligible to offer them, you can contact us at <a href="#">apar.mailbox@DWP.GOV.UK</a>. </p>
+
+<p class="govuk-body-m">We may ask you to provide additional evidence to demonstrate your eligibility.</p>
+
+<p class="govuk-body-m">Find out more about <a href="https://www.gov.uk/government/publications/resources-for-promoting-apprenticeships-and-skills/apprenticeship-units-accessible-version-of-toolkit" target="_blank">what apprenticeship units are, who can deliver them and how they’re funded (opens in a new tab).</a></p>
+
+
+</div>
+
+
+  </div>
+  </div>
+
+{% endblock %}

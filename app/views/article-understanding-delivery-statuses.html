@@ -3,7 +3,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-Understanding – {{ serviceName }} – GOV.UK Prototype Kit
+Understanding Funding Statuses
 {% endblock %}
 
 {% block containerStart %}
@@ -39,7 +39,7 @@ href: "javascript:window.history.back()"
 
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-8">
-      Understanding the different delivery statuses </h1>
+      Understanding the different funding statuses </h1>
 
       {{ govukTag({
   text: "Training providers",
@@ -47,30 +47,30 @@ href: "javascript:window.history.back()"
 }) }}
 
 
-<h2 class="govuk-!-margin-top-7">Who sets the delivery statuses?</h2>
+<h2 class="govuk-!-margin-top-7">Who sets the funding statuses?</h2>
 
-<p>The Apprenticeship Service is responsible for managing delivery statuses.</p>
+<p>The Apprenticeship Service (AS) is responsible for setting funding statuses.</p>
 
 <p>We use them to manage which training providers deliver different courses, and for how long. </p>
 
 <h2>Status descriptions</h2>
 
-<h3>Not available yet</h3>
+<!-- <h3>Not available yet</h3>
 <p>This means the course can be advertised on Find apprenticeship training, but you can’t enrol learners or claim government funding yet.</p>
 <p>When it becomes available, its status will change to open to new starts.</p>
 
 <h3>Open to new starts</h3>
 
 <p>This delivery status appears on courses you currently offer and advertise on Find apprenticeship training.</p>
-<p>You can claim government funding for them by submitting Individualised Learning Records (ILRs).</p>
+<p>You can claim government funding for them by submitting Individualised Learning Records (ILRs).</p> -->
 
-<h3>Last start date added</h3>
-<p>The Apprenticeship Service will add a last date for new starts to courses that will not be available in the future.</p>
-<p>This could be because the course is being defunded, or because we want to better manage its delivery.</p>
-<p>You can continue to enrol new government funded learners up until the last start date.</p>
+<h3>Funding closing for new starts</h3>
+<p>The Apprenticeship Service (AS) will add a last date for new starts when funding is due to be withdrawn, or a course won’t be available soon. </p>
+<p>This could be because the course is being defunded, or because we want to better manage its delivery. </p>
+<p>You can continue to enrol new government funded learners up until the last start date. </p>
 
-<h3>Closed to new starts</h3>
-<p>This means the last date for new starts set by the Apprenticeship Service has now passed.</p>
+<h3>Funding closed for new starts</h3>
+<p>This means the window for adding new government funding has passed.  </p>
 
 <p class="govuk-body">If your course is closed to new starts, you will not be able to:</p>
 <ul class="govuk-list govuk-list--bullet">
