@@ -8,11 +8,29 @@
 
 {% block containerStart %}
 
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{{ govukBackLink({
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Home",
+      href: "index.html"
+    },
+    {
+      text: "Manage your training courses",
+      href: "manage-training-and-venues.html"
+    },
+        {
+      text: "Manage your apprenticeships",
+      href: "manage-your-standards.html"
+    }
+  ]
+}) }}
+
+<!-- {{ govukBackLink({
   text: "Back",
   href: "/manage-your-apprenticeship-units" if course.type == "Unit" else "/manage-your-standards"
-}) }}
+}) }} -->
 
 
 {% endblock %}
@@ -49,7 +67,7 @@
     {% if data.success == "true" and course.larsCode in (data.keptCourses or []) %}
   {{ govukNotificationBanner({
     type: "success",
-    text: "This course is no longer marked for removal."
+    text: "This course will continue to be advertised on Find apprenticeship training."
   }) }}
 {% endif %}
 
@@ -64,13 +82,13 @@
       <!-- Set up status coloured tags -->
        {% set tagClass = "" %}
 
-{% if course.status == "Open to new starts" %}
+{% if course.status == "Open for funding" %}
   {% set tagClass = "govuk-tag--green" %}
-{% elif course.status == "Last start date added" %}
+{% elif course.status == "Funding closing for new starts" %}
   {% set tagClass = "govuk-tag--orange" %}
-{% elif course.status == "Closed to new starts" %}
+{% elif course.status == "Funding closed for new starts" %}
   {% set tagClass = "govuk-tag--light-grey" %}
-{% elif course.status == "Not available yet" %}
+{% elif course.status == "Funding not available yet" %}
   {% set tagClass = "govuk-tag--yellow" %}
 {% endif %}
 
@@ -126,7 +144,7 @@ value: {
   }
 ] %}
 
-{% if course.status == "Last start date added" %}
+{% if course.status == "Funding closing for new starts" %}
   {% set rows = (rows.push({
     key: {
       text: "Last start date"
@@ -137,7 +155,7 @@ value: {
   }), rows) %}
 {% endif %}
 
-{% if course.status == "Closed to new starts" %}
+{% if course.status == "Funding closed for new starts" %}
   {% set rows = (rows.push({
     key: {
       text: "Last start date"
@@ -154,7 +172,7 @@ value: {
 
     <!-- Last start date status explainer text -->
 
-{% if course.status == "Last start date added" %}
+{% if course.status == "Funding closing for new starts" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: "This course has a last start date set. Once the last start date has passed, you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
@@ -165,10 +183,10 @@ value: {
 
 <!-- Not available yet status explainer text -->
 
-{% if course.status == "Not available yet" %}
+{% if course.status == "Funding not available yet" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
-  html: "This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training",
+  html: "This course is not available for delivery or enrolment yet. But you can start advertising it on Find apprenticeship training. You’ll be notified once the course is available. ",
   iconFallbackText: "Warning"
 }) }}
 
@@ -176,7 +194,7 @@ value: {
 
 <!-- Closed to new starts status explainer text -->
 
-{% if course.status == "Closed to new starts" %}
+{% if course.status == "Funding closed for new starts" %}
   {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {{ govukWarningText({
   html: "This course is closed to new starts. This means you will not be able to: <ul><li>add new learners</li><li>advertise it on Find apprenticeship training </li><li>submit ILRs for learners who start after this date</li></ul>You can continue to train learners who are already on the course.",
@@ -185,30 +203,50 @@ value: {
 
 {% endif %}
 
-<!-- Marked for removal status explainer text + actions, within coloured container -->
+<!-- Marked as inactive status explainer text + actions, within coloured container -->
 
-{% if course.action == "Marked for removal"
+{% if course.action == "Marked as inactive"
    and course.larsCode not in (data.keptCourses or []) %}
 
 <div class="action-container govuk-!-margin-top-8 govuk-!-margin-bottom-7">
-  <h2>Action required</h2>
-  <p>This course has had no learners for an extended period and appears to be inactive. It will be removed on <b>{{ course.removalDate }}</b> unless you confirm that you still offer it.</p>
-  {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+  <div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    This course is no longer being advertised on Find apprenticeship training. 
+  </strong>
+</div>
+  <p>We have marked this course as inactive as you haven’t added any new starts for over 18 months.</p>
+  <ul>
+    <li><b>Reactivate it</b> if you still want to attract new learners through Find apprenticeship training</li>
+    <li><b>Remove it</b> from your account if you no longer want to deliver it or take on new learners</li>
+  </ul>
+
+  <details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      What this means for your funding
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+   <p>Removing a course means you cannot claim funding for new learners. But you can continue to submit Individualised Learning Records (ILRs) for learners already on the course. </p>
+   <p>You can also submit ILRs for learners on inactive courses. However, if you submit an ILR for a new start, the course will start showing on Find apprenticeship training again. </p>
+  </div>
+</details>
 
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 <div class="govuk-button-group govuk-!-margin-bottom-0">
 
-<!-- Marked for removal - users can choose to keep the course, or remove. Keeping the course continues the flow we are testing in this prototype -->
+<!-- Marked as inacitve - users can choose to reactivate the course, or remove. Keeping the course continues the flow we are testing in this prototype -->
 
 {{ govukButton({
-  text: "Keep this course",
+  text: "Reactivate this course",
   href: "/confirm-keep-course/" + course.larsCode
 }) }}
 
-
-  <a class="govuk-link" href="#">Remove course</a>
+<a class="govuk-link" href="/confirm-delete-course/{{ course.larsCode }}">Remove it from your offering</a>
 </div>
 
 </div>
@@ -216,7 +254,7 @@ value: {
 {% endif %}
 
 <!-- Only show the contact details and training options sections for courses that are not already closed -->
-{% if course.status != "Closed to new starts" %}
+{% if course.status != "Funding closed for new starts" %}
 
 
 <!-- Contact details section -->
@@ -367,7 +405,7 @@ value: {
 
 <div class="govuk-inset-text">
 
-{% if course.status == "Closed to new starts" %}
+{% if course.status == "Funding closed for new starts" %}
 <p><b>You can delete this course if you no longer have learners on it. </b></p>
 {% endif %}
 

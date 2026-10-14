@@ -12,11 +12,11 @@ Manage your apprenticeships
 {{ govukBreadcrumbs({
   items: [
     {
-      text: "Dashboard",
+      text: "Home",
       href: "index.html"
     },
     {
-      text: "Manage your apprenticeships and apprenticeship units",
+      text: "Manage your training courses",
       href: "manage-training-and-venues.html"
     }
   ]
@@ -111,7 +111,7 @@ html: "<p class='govuk-notification-banner__heading'>"
 
     {% set actionText = "" %}
 
-    <!-- Course is marked as inactive - manage what statuses courses have in courses.js file -->
+    <!-- Course is marked as inactive - manage what statuses courses have in courses.js file with the attribute 'action' -->
 
     {% if course.action == "Marked as inactive" %}
       {% set actionText = "Confirm or remove" %}
