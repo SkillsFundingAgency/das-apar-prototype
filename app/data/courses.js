@@ -1,7 +1,8 @@
 module.exports = [
   { title: "Asset manager (level 4)", larsCode: "624", status: "Open for funding", sector: "Engineering and manufacturing", type: "Apprenticeship", action: "Marked as inactive" },
-    { title: "Learning and skills mentor (level 4)", larsCode: "694", status: "Funding closing for new starts", laststartDate: "21 Oct 2026", sector: "Education and early years", type: "Apprenticeship" },
-  { title: "Team leader (level 3)", larsCode: "105", status: "Funding closed for new starts", laststartDate: "11 Apr 2026", sector: "Business and administration", type: "Apprenticeship" },
+    // { title: "Learning and skills mentor (level 4)", larsCode: "694", status: "Funding closing for new starts", laststartDate: "21 Oct 2026", sector: "Education and early years", type: "Apprenticeship" },
+      { title: "Accounts or finance assistant (level 2)", larsCode: "488", status: "Open for funding", sector: "Legal, finance and accounting", laststartDate: "20 Dec 2027", type: "Apprenticeship" },
+  { title: "Team leader (level 3)", larsCode: "105", status: "Funding closed for new starts", laststartDate: "31 Aug 2026", sector: "Business and administration", type: "Apprenticeship" },
   { title: "Business administrator (level 3)", larsCode: "196", status: "Open for funding", sector: "Business and administration", type: "Apprenticeship" },
   { title: "Digital support technician (level 3)", larsCode: "439", status: "Open for funding", sector: "Digital", type: "Apprenticeship" },
   { title: "User researcher (level 4)", larsCode: "543", status: "Funding not available yet", sector: "Digital", type: "Apprenticeship" },
