@@ -12,7 +12,6 @@
   {% set tagClass = "govuk-tag govuk-tag--yellow" %}
 {% endif %}
 
-
 {% set isMarkedForRemoval =
   course.action == "Marked as inactive"
   and course.larsCode not in (data.keptCourses or [])
