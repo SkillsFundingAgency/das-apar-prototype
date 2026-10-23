@@ -32,23 +32,23 @@
 
   </div>
 
-{% if course.status == "Funding closed for new starts" %}
-<p class="govuk-!-margin-top-3"><b>Funding status:</b> We’ve closed this apprenticeship to new starts. This means you can no longer claim funding for any learners you enrol. </p>
-{% endif %}
-
-{% if course.status == "Funding not available yet" %}
-<p class="govuk-!-margin-top-3"><b>Funding status:</b> This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
-{% endif %}
-
-{% if course.status == "Funding closing for new starts" %}
-<p class="govuk-!-margin-top-3"><b>Funding status:</b> We’ve added a last start date for learners to this course. You can claim funding for learners you enrol up until this date. </p>
-{% endif %}
-
-
-<div class="course-info">
+  <div class="course-info">
   <p>
     <span class="secondary-text">LARS code</span>: {{ course.larsCode }}
   </p>
+
+
+{% if course.status == "Funding closed for new starts" %}
+<p><span class="secondary-text">Funding status:</span> We’ve closed this apprenticeship to new starts. This means you can no longer claim funding for any learners you enrol. </p>
+{% endif %}
+
+{% if course.status == "Funding not available yet" %}
+<p><span class="secondary-text">Funding status:</span> This course isn't available for delivery or enrolment, but can be advertised on Find apprenticeship training.</p>
+{% endif %}
+
+{% if course.status == "Funding closing for new starts" %}
+<p><span class="secondary-text">Funding status:</span> We’ve added a last start date for learners to this course. You can claim funding for learners you enrol up until this date. </p>
+{% endif %}
 
 
 {% if course.status == "Funding closing for new starts" and course.laststartDate %}
