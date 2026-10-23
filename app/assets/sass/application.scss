@@ -99,6 +99,10 @@ $govuk-font-family: 'Inter', sans-serif;
 // course info
 .course-info {
 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     margin-top: 5px;
 
     p {
